@@ -3044,7 +3044,7 @@ async function searchCustomer() {
     // ── Query Order History (Suitcube_Order__c) ──
     try {
       const oResult = await sfQuery(
-        `SELECT Id, Name, CreatedDate, Order_Type__c
+        `SELECT Id, Name, CreatedDate, Order_Type__c, Suitcube_Product__r.Name
          FROM Suitcube_Order__c
          WHERE Contact__c = '${c.Id}'
          ORDER BY CreatedDate DESC LIMIT 1`
@@ -3055,7 +3055,7 @@ async function searchCustomer() {
           o.CreatedDate ? o.CreatedDate.substring(0,10) : '',
           o.Order_Type__c || '',
           o.Name || '',
-          ''
+          (o.Suitcube_Product__r && o.Suitcube_Product__r.Name) || ''
         );
       } else {
         setHistoryDisplay(false, '', '', '', '');
