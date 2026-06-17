@@ -1109,6 +1109,48 @@ input,textarea,select,button,option{
   font-weight:300;
 }
 .cp-clear:hover{color:#999;}
+
+/* ── Order History pills ── */
+.hh-lbl{
+  font-size:11px;color:#aaa;font-family:'Prompt',sans-serif;font-weight:300;margin-bottom:6px;
+}
+.hh-pillrow{
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+.hh-pill{
+  display:inline-flex;align-items:center;
+  padding:6px 14px;
+  border:1.5px solid var(--gold);
+  border-radius:999px;
+  background:#fff;
+  color:var(--gold);
+  font-family:'Quicksand',sans-serif;
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:.02em;
+  cursor:pointer;
+  user-select:none;
+  transition:.15s;
+}
+.hh-pill:hover{background:#fdf6e9;}
+.hh-pill.sel{
+  background:var(--gold);
+  border-color:var(--gold);
+  color:#fff;
+  font-weight:700;
+}
+.hh-empty{font-size:13px;color:#bbb;font-family:'Prompt',sans-serif;font-weight:300;}
+.hh-typebadge{
+  display:inline-flex;
+  padding:5px 12px;
+  border-radius:8px;
+  background:#fdf6e9;
+  border:1px solid #f0e0bb;
+  color:#8a6512;
+  font-family:'Prompt',sans-serif;
+  font-weight:400;
+  font-size:13px;
+}
 </style>
 </head>
 <body>
@@ -1218,15 +1260,19 @@ input,textarea,select,button,option{
     <div id="h_no_order" style="font-size:14px;color:#bbb;font-family:'Prompt',sans-serif;font-weight:300">ยังไม่เคยสั่งตัด</div>
     <div id="h_order_detail" style="display:none;flex-direction:column;gap:14px">
       <div>
-        <div style="font-size:11px;color:#aaa;font-family:'Prompt',sans-serif;font-weight:300;margin-bottom:3px">Order ID</div>
-        <div id="h_orderId_disp" style="font-size:14px;font-weight:500;color:#222;font-family:'Quicksand',sans-serif;letter-spacing:0.02em">—</div>
+        <div class="hh-lbl">Order ID</div>
+        <div id="h_orderId_pills" class="hh-pillrow"></div>
+      </div>
+      <div id="h_productId_wrap" style="display:none">
+        <div class="hh-lbl">Product ID</div>
+        <div id="h_productId_pills" class="hh-pillrow"></div>
       </div>
       <div>
-        <div style="font-size:11px;color:#aaa;font-family:'Prompt',sans-serif;font-weight:300;margin-bottom:3px">Product ID</div>
-        <div id="h_productId_disp" style="font-size:14px;font-weight:500;color:#222;font-family:'Quicksand',sans-serif;letter-spacing:0.02em">—</div>
+        <div class="hh-lbl">Product Type</div>
+        <div id="h_productType_disp" class="hh-typebadge">—</div>
       </div>
       <div>
-        <div style="font-size:11px;color:#aaa;font-family:'Prompt',sans-serif;font-weight:300;margin-bottom:3px">วันที่ซื้อสินค้า</div>
+        <div class="hh-lbl">วันที่ซื้อสินค้า</div>
         <div id="h_lastDate_disp" style="font-size:14px;font-weight:400;color:#333;font-family:'Prompt',sans-serif">—</div>
       </div>
     </div>
@@ -3006,7 +3052,7 @@ async function searchCustomer() {
 
   if (!norm) {
     setSfMsg('', '');
-    setHistoryDisplay(false, '', '', '', '');
+    setHistoryDisplay([]);
     document.querySelectorAll('.fsel').forEach(sel => updSelColor(sel));
     return;
   }
@@ -3029,7 +3075,7 @@ async function searchCustomer() {
       // ไม่พบ → ล้างเฉพาะ Customer Info (ชื่อ/เพศ) และ OrderHistory
       // ส่วนสูง/น้ำหนัก ไม่แตะ เพราะไม่ได้ดึงจาก Salesforce (ฟิลด์นี้ยังไม่มีใน Sandbox)
       setVal('f_name',''); setVal('f_gender','');
-      setHistoryDisplay(false, '', '', '', '');
+      setHistoryDisplay([]);
       setSfMsg('ไม่พบลูกค้า — กรอกข้อมูลเองได้เลย', 'notfound');
       document.querySelectorAll('.fsel').forEach(sel => updSelColor(sel));
       return;
@@ -3040,27 +3086,28 @@ async function searchCustomer() {
     setVal('f_gender', c.Field1__c || '');
     // ส่วนสูง/น้ำหนัก: ฟิลด์นี้ยังไม่มีใน Sandbox (มีแค่ใน Production) — เว้นไว้ให้กรอกเอง
 
-    // ── Query Order History (Suitcube_Order__c) ──
+    // ── Query Order History (Suitcube_Order__c, all orders + nested products) ──
     try {
       const oResult = await sfQuery(
-        `SELECT Id, Name, CreatedDate, Order_Type__c, Suitcube_Product__r.Name
+        `SELECT Id, Name, Purchase_Date__c, CreatedDate,
+                (SELECT Id, Name, Suitcube_Product_Name__r.Name FROM Suitcube_Product__r ORDER BY CreatedDate ASC)
          FROM Suitcube_Order__c
          WHERE Contact__c = '${c.Id}'
-         ORDER BY CreatedDate DESC LIMIT 1`
+         ORDER BY Purchase_Date__c DESC NULLS LAST, CreatedDate DESC`
       );
-      if (oResult.totalSize > 0) {
-        const o = oResult.records[0];
-        setHistoryDisplay(true,
-          o.CreatedDate ? o.CreatedDate.substring(0,10) : '',
-          o.Order_Type__c || '',
-          o.Name || '',
-          (o.Suitcube_Product__r && o.Suitcube_Product__r.Name) || ''
-        );
-      } else {
-        setHistoryDisplay(false, '', '', '', '');
-      }
+      const orders = (oResult.records || []).map(o => ({
+        id: o.Id,
+        name: o.Name || '',
+        purchaseDate: o.Purchase_Date__c ? o.Purchase_Date__c.substring(0,10) : (o.CreatedDate ? o.CreatedDate.substring(0,10) : ''),
+        products: (o.Suitcube_Product__r ? o.Suitcube_Product__r.records : []).map(p => ({
+          id: p.Id,
+          name: p.Name || '',
+          typeName: (p.Suitcube_Product_Name__r && p.Suitcube_Product_Name__r.Name) || ''
+        }))
+      }));
+      setHistoryDisplay(orders);
     } catch (_) {
-      setHistoryDisplay(false, '', '', '', '');
+      setHistoryDisplay([]);
     }
 
     setSfMsg('พบลูกค้า: ' + c.Name, 'found');
@@ -3101,7 +3148,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       } else if(norm.length === 0){
         // reset เมื่อลบเบอร์ออกหมด
         setMemberDisplay('', 0, '');
-        setHistoryDisplay(false, '', '', '', '');
+        setHistoryDisplay([]);
         setSfMsg('', '');
       }
     });
@@ -3109,7 +3156,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   }
   // Init display defaults
   setMemberDisplay('', 0, '');
-  setHistoryDisplay(false, '', '');
+  setHistoryDisplay([]);
 });
 
 
@@ -3144,7 +3191,21 @@ function setMemberDisplay(level, points, expiry) {
   }
 }
 
-function setHistoryDisplay(ordered, lastDate, lastType, orderId, productId) {
+// ── Order History (multi-order, pill-based) ──
+let _hhOrders = [];
+let _hhOrderIdx = 0;
+let _hhProductIdx = 0;
+
+function hhEsc(s){
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function setHistoryDisplay(orders) {
+  _hhOrders = Array.isArray(orders) ? orders : [];
+  _hhOrderIdx = 0;
+  _hhProductIdx = 0;
+
+  const ordered = _hhOrders.length > 0;
   setVal('h_status', ordered ? 'ordered' : 'new');
 
   const noOrder = document.getElementById('h_no_order');
@@ -3152,19 +3213,65 @@ function setHistoryDisplay(ordered, lastDate, lastType, orderId, productId) {
   if(noOrder) noOrder.style.display = ordered ? 'none' : 'block';
   if(detail)  detail.style.display  = ordered ? 'flex'  : 'none';
 
-  const orderIdDisp = document.getElementById('h_orderId_disp');
-  if(orderIdDisp) orderIdDisp.textContent = (ordered && orderId) ? orderId : '—';
+  hhRenderOrderPills();
+  hhRenderProductPills();
+  hhRenderDetail();
+}
 
-  const productIdDisp = document.getElementById('h_productId_disp');
-  if(productIdDisp) productIdDisp.textContent = (ordered && productId) ? productId : '—';
+function hhRenderOrderPills(){
+  const wrap = document.getElementById('h_orderId_pills');
+  if(!wrap) return;
+  if(!_hhOrders.length){ wrap.innerHTML = '<span class="hh-empty">—</span>'; return; }
+  wrap.innerHTML = _hhOrders.map((o,i) =>
+    `<button type="button" class="hh-pill${i===_hhOrderIdx?' sel':''}" onclick="hhSelectOrder(${i})">${hhEsc(o.name || '—')}</button>`
+  ).join('');
+}
 
-  setVal('h_lastDate', lastDate);
+function hhRenderProductPills(){
+  const prodWrap = document.getElementById('h_productId_wrap');
+  const wrap     = document.getElementById('h_productId_pills');
+  const order    = _hhOrders[_hhOrderIdx];
+  const products = (order && order.products) || [];
+
+  if(!products.length){
+    if(prodWrap) prodWrap.style.display = 'none';
+    return;
+  }
+  if(prodWrap) prodWrap.style.display = 'block';
+  if(wrap) wrap.innerHTML = products.map((p,i) =>
+    `<button type="button" class="hh-pill${i===_hhProductIdx?' sel':''}" onclick="hhSelectProduct(${i})">${hhEsc(p.name || '—')}</button>`
+  ).join('');
+}
+
+function hhRenderDetail(){
+  const order   = _hhOrders[_hhOrderIdx];
+  const product = order && order.products && order.products[_hhProductIdx];
+
+  const typeDisp = document.getElementById('h_productType_disp');
+  if(typeDisp) typeDisp.textContent = (product && product.typeName) ? product.typeName : '—';
+
+  const lastDate = order ? order.purchaseDate : '';
+  setVal('h_lastDate', lastDate || '');
   const dateDisp = document.getElementById('h_lastDate_disp');
   if(dateDisp) {
-    dateDisp.textContent = (ordered && lastDate)
+    dateDisp.textContent = lastDate
       ? new Date(lastDate).toLocaleDateString('th-TH',{day:'2-digit',month:'long',year:'numeric'})
       : '—';
   }
+}
+
+function hhSelectOrder(i){
+  _hhOrderIdx = i;
+  _hhProductIdx = 0;
+  hhRenderOrderPills();
+  hhRenderProductPills();
+  hhRenderDetail();
+}
+
+function hhSelectProduct(i){
+  _hhProductIdx = i;
+  hhRenderProductPills();
+  hhRenderDetail();
 }
 
 function onHistoryStatusChange() {
