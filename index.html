@@ -1305,6 +1305,10 @@ input,textarea,select,button,option{
         <span class="vstatus" id="vstatus"></span>
       </div>
     </div>
+    <div id="sizeRecBox" style="display:none;margin-bottom:14px;padding:10px 16px;background:#fdf6e8;border:1px solid #d9ae5d;border-radius:8px;font-family:'Prompt',sans-serif">
+      <span style="font-size:12px;color:#9a7b35;font-weight:500">ไซซ์แนะนำ (จากประวัติการสั่งตัด)</span>
+      <div id="sizeRecValue" style="font-size:18px;font-weight:600;color:#333;margin-top:2px">—</div>
+    </div>
     <div id="measContent"><p style="color:#aaa;text-align:center;padding:20px;font-family:'Prompt',sans-serif;font-weight:300">กรุณาเลือกประเภทการสั่งตัดก่อน</p></div>
     <div id="bodySelectWrap" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(217,174,93,.2)">
       <label class="flbl" style="margin-bottom:6px;display:block">ลักษณะรูปร่างของลูกค้า</label>
@@ -2370,6 +2374,7 @@ function selG(type, el){
   const lbl=GLBL[type]||'';
   document.getElementById('measTitle').textContent='Body Measurement';
   document.getElementById('bodySelectWrap').style.display='block';
+  updateSizeRec();
 }
 
 // ── RENDER MEASUREMENTS ──
@@ -3090,7 +3095,7 @@ async function searchCustomer() {
     try {
       const oResult = await sfQuery(
         `SELECT Id, Name, Purchase_Date__c, CreatedDate,
-                (SELECT Id, Name, Suitcube_Product_Name__r.Name FROM Suitcube_Product__r ORDER BY CreatedDate ASC)
+                (SELECT Id, Name, Suitcube_Product_Name__r.Name, Size1__c, Size2__c, Size__c, Sizeshirt__c FROM Suitcube_Product__r ORDER BY CreatedDate ASC)
          FROM Suitcube_Order__c
          WHERE Contact__c = '${c.Id}'
          ORDER BY Purchase_Date__c DESC NULLS LAST, CreatedDate DESC`
@@ -3099,11 +3104,21 @@ async function searchCustomer() {
         id: o.Id,
         name: o.Name || '',
         purchaseDate: o.Purchase_Date__c ? o.Purchase_Date__c.substring(0,10) : (o.CreatedDate ? o.CreatedDate.substring(0,10) : ''),
-        products: (o.Suitcube_Product__r ? o.Suitcube_Product__r.records : []).map(p => ({
-          id: p.Id,
-          name: p.Name || '',
-          typeName: (p.Suitcube_Product_Name__r && p.Suitcube_Product_Name__r.Name) || ''
-        }))
+        products: (o.Suitcube_Product__r ? o.Suitcube_Product__r.records : []).map(p => {
+          const typeName = (p.Suitcube_Product_Name__r && p.Suitcube_Product_Name__r.Name) || '';
+          // ไซซ์แนะนำ: เลือกฟิลด์ Size ตามประเภทสินค้า (Product Type)
+          let sizeValue = '';
+          if (typeName.includes('เสื้อสูท'))      sizeValue = p.Size1__c    != null ? String(p.Size1__c)    : '';
+          else if (typeName.includes('กางเกง'))   sizeValue = p.Size2__c    != null ? String(p.Size2__c)    : '';
+          else if (typeName.includes('เสื้อกั๊ก')) sizeValue = p.Size__c     != null ? String(p.Size__c)     : '';
+          else if (typeName.includes('เชิ้ต'))     sizeValue = p.Sizeshirt__c != null ? String(p.Sizeshirt__c) : '';
+          return {
+            id: p.Id,
+            name: p.Name || '',
+            typeName,
+            sizeValue
+          };
+        })
       }));
       setHistoryDisplay(orders);
     } catch (_) {
@@ -3216,6 +3231,7 @@ function setHistoryDisplay(orders) {
   hhRenderOrderPills();
   hhRenderProductPills();
   hhRenderDetail();
+  updateSizeRec();
 }
 
 function hhRenderOrderPills(){
@@ -3266,12 +3282,32 @@ function hhSelectOrder(i){
   hhRenderOrderPills();
   hhRenderProductPills();
   hhRenderDetail();
+  updateSizeRec();
 }
 
 function hhSelectProduct(i){
   _hhProductIdx = i;
   hhRenderProductPills();
   hhRenderDetail();
+  updateSizeRec();
+}
+
+// ── ไซซ์แนะนำ: แสดงเมื่อ Product Type (ประวัติสั่งตัด) ตรงกับ Tailoring Type ที่เลือกอยู่ ──
+function updateSizeRec(){
+  const box = document.getElementById('sizeRecBox');
+  const val = document.getElementById('sizeRecValue');
+  if(!box || !val) return;
+
+  const order   = _hhOrders[_hhOrderIdx];
+  const product = order && order.products && order.products[_hhProductIdx];
+  const matchLbl = GLBL[S.gtype] || '';
+
+  if(product && matchLbl && product.typeName && product.typeName.includes(matchLbl) && product.sizeValue){
+    val.textContent = product.sizeValue;
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
 }
 
 function onHistoryStatusChange() {
