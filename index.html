@@ -1260,16 +1260,16 @@ input,textarea,select,button,option{
     <div id="h_no_order" style="font-size:14px;color:#bbb;font-family:'Prompt',sans-serif;font-weight:300">ยังไม่เคยสั่งตัด</div>
     <div id="h_order_detail" style="display:none;flex-direction:column;gap:14px">
       <div>
-        <div class="hh-lbl">Order ID</div>
-        <div id="h_orderId_pills" class="hh-pillrow"></div>
+        <div class="hh-lbl">Product Type</div>
+        <div id="h_productType_pills" class="hh-pillrow"></div>
       </div>
-      <div id="h_productId_wrap" style="display:none">
+      <div>
         <div class="hh-lbl">Product ID</div>
         <div id="h_productId_pills" class="hh-pillrow"></div>
       </div>
       <div>
-        <div class="hh-lbl">Product Type</div>
-        <div id="h_productType_disp" class="hh-typebadge">—</div>
+        <div class="hh-lbl">Order ID</div>
+        <div id="h_orderId_disp" class="hh-typebadge">—</div>
       </div>
       <div>
         <div class="hh-lbl">วันที่ซื้อสินค้า</div>
@@ -3206,10 +3206,12 @@ function setMemberDisplay(level, points, expiry) {
   }
 }
 
-// ── Order History (multi-order, pill-based) ──
-let _hhOrders = [];
-let _hhOrderIdx = 0;
-let _hhProductIdx = 0;
+// ── Order History (multi-order, pill-based; grouped by Product Type) ──
+let _hhOrders   = [];   // raw orders (each with nested .products), as fetched
+let _hhProducts = [];   // flattened products across all orders, tagged with their order info
+let _hhTypes    = [];   // distinct Product Type names (most-recent-first)
+let _hhTypeIdx  = 0;
+let _hhProdIdx  = 0;    // index within the products that match the selected type
 
 function hhEsc(s){
   return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -3217,10 +3219,25 @@ function hhEsc(s){
 
 function setHistoryDisplay(orders) {
   _hhOrders = Array.isArray(orders) ? orders : [];
-  _hhOrderIdx = 0;
-  _hhProductIdx = 0;
 
-  const ordered = _hhOrders.length > 0;
+  _hhProducts = [];
+  _hhOrders.forEach(o => {
+    (o.products || []).forEach(p => {
+      _hhProducts.push(Object.assign({}, p, { orderName: o.name, purchaseDate: o.purchaseDate }));
+    });
+  });
+
+  _hhTypes = [];
+  const seenTypes = new Set();
+  _hhProducts.forEach(p => {
+    const t = p.typeName || '—';
+    if(!seenTypes.has(t)){ seenTypes.add(t); _hhTypes.push(t); }
+  });
+
+  _hhTypeIdx = 0;
+  _hhProdIdx = 0;
+
+  const ordered = _hhProducts.length > 0;
   setVal('h_status', ordered ? 'ordered' : 'new');
 
   const noOrder = document.getElementById('h_no_order');
@@ -3228,45 +3245,50 @@ function setHistoryDisplay(orders) {
   if(noOrder) noOrder.style.display = ordered ? 'none' : 'block';
   if(detail)  detail.style.display  = ordered ? 'flex'  : 'none';
 
-  hhRenderOrderPills();
+  hhRenderTypePills();
   hhRenderProductPills();
   hhRenderDetail();
   updateSizeRec();
 }
 
-function hhRenderOrderPills(){
-  const wrap = document.getElementById('h_orderId_pills');
+function hhProductsOfType(type){
+  return _hhProducts.filter(p => (p.typeName || '—') === type);
+}
+
+function hhRenderTypePills(){
+  const wrap = document.getElementById('h_productType_pills');
   if(!wrap) return;
-  if(!_hhOrders.length){ wrap.innerHTML = '<span class="hh-empty">—</span>'; return; }
-  wrap.innerHTML = _hhOrders.map((o,i) =>
-    `<button type="button" class="hh-pill${i===_hhOrderIdx?' sel':''}" onclick="hhSelectOrder(${i})">${hhEsc(o.name || '—')}</button>`
+  if(!_hhTypes.length){ wrap.innerHTML = '<span class="hh-empty">—</span>'; return; }
+  wrap.innerHTML = _hhTypes.map((t,i) =>
+    `<button type="button" class="hh-pill${i===_hhTypeIdx?' sel':''}" onclick="hhSelectType(${i})">${hhEsc(t)}</button>`
   ).join('');
 }
 
 function hhRenderProductPills(){
-  const prodWrap = document.getElementById('h_productId_wrap');
-  const wrap     = document.getElementById('h_productId_pills');
-  const order    = _hhOrders[_hhOrderIdx];
-  const products = (order && order.products) || [];
-
-  if(!products.length){
-    if(prodWrap) prodWrap.style.display = 'none';
-    return;
-  }
-  if(prodWrap) prodWrap.style.display = 'block';
-  if(wrap) wrap.innerHTML = products.map((p,i) =>
-    `<button type="button" class="hh-pill${i===_hhProductIdx?' sel':''}" onclick="hhSelectProduct(${i})">${hhEsc(p.name || '—')}</button>`
+  const wrap = document.getElementById('h_productId_pills');
+  if(!wrap) return;
+  const type = _hhTypes[_hhTypeIdx];
+  const list = type ? hhProductsOfType(type) : [];
+  if(!list.length){ wrap.innerHTML = '<span class="hh-empty">—</span>'; return; }
+  wrap.innerHTML = list.map((p,i) =>
+    `<button type="button" class="hh-pill${i===_hhProdIdx?' sel':''}" onclick="hhSelectProduct(${i})">${hhEsc(p.name || '—')}</button>`
   ).join('');
 }
 
+function hhCurrentProduct(){
+  const type = _hhTypes[_hhTypeIdx];
+  if(!type) return null;
+  const list = hhProductsOfType(type);
+  return list[_hhProdIdx] || null;
+}
+
 function hhRenderDetail(){
-  const order   = _hhOrders[_hhOrderIdx];
-  const product = order && order.products && order.products[_hhProductIdx];
+  const product = hhCurrentProduct();
 
-  const typeDisp = document.getElementById('h_productType_disp');
-  if(typeDisp) typeDisp.textContent = (product && product.typeName) ? product.typeName : '—';
+  const orderDisp = document.getElementById('h_orderId_disp');
+  if(orderDisp) orderDisp.textContent = (product && product.orderName) ? product.orderName : '—';
 
-  const lastDate = order ? order.purchaseDate : '';
+  const lastDate = product ? product.purchaseDate : '';
   setVal('h_lastDate', lastDate || '');
   const dateDisp = document.getElementById('h_lastDate_disp');
   if(dateDisp) {
@@ -3276,17 +3298,17 @@ function hhRenderDetail(){
   }
 }
 
-function hhSelectOrder(i){
-  _hhOrderIdx = i;
-  _hhProductIdx = 0;
-  hhRenderOrderPills();
+function hhSelectType(i){
+  _hhTypeIdx = i;
+  _hhProdIdx = 0;
+  hhRenderTypePills();
   hhRenderProductPills();
   hhRenderDetail();
   updateSizeRec();
 }
 
 function hhSelectProduct(i){
-  _hhProductIdx = i;
+  _hhProdIdx = i;
   hhRenderProductPills();
   hhRenderDetail();
   updateSizeRec();
@@ -3298,8 +3320,7 @@ function updateSizeRec(){
   const val = document.getElementById('sizeRecValue');
   if(!box || !val) return;
 
-  const order   = _hhOrders[_hhOrderIdx];
-  const product = order && order.products && order.products[_hhProductIdx];
+  const product = hhCurrentProduct();
   const matchLbl = GLBL[S.gtype] || '';
 
   if(product && matchLbl && product.typeName && product.typeName.includes(matchLbl) && product.sizeValue){
