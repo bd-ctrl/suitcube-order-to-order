@@ -3450,39 +3450,33 @@ function pickCollar(el){
 function pickTrWaist(el){
   document.querySelectorAll('#d_trWaistType .vent-pick').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
-  designData.d_trWaistType = el.dataset.v;
-  updateSummary();
+  S.pills['d_trWaistType'] = el.dataset.v;
 }
 function pickTrBackPocket(el, sub){
   document.querySelectorAll('#d_trBackPocket .vent-pick').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
-  designData.d_trBackPocket = el.dataset.v;
+  S.pills['d_trBackPocket'] = el.dataset.v;
   showBackPocketSub(sub);
-  updateSummary();
 }
 function pickVCollar(el){
   document.querySelectorAll('#d_vCollar .vent-pick').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
-  designData.d_vCollar = el.dataset.v;
-  updateSummary();
+  S.pills['d_vCollar'] = el.dataset.v;
 }
 function pickTrBelt(el){
   document.querySelectorAll('#d_trBelt .vent-pick').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
-  designData.d_trBelt = el.dataset.v;
-  updateSummary();
+  S.pills['d_trBelt'] = el.dataset.v;
 }
 function pickTrPleat(el){
   document.querySelectorAll('#d_trPleat .vent-pick').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
-  designData.d_trPleat = el.dataset.v;
-  updateSummary();
+  S.pills['d_trPleat'] = el.dataset.v;
 }
 function pickSidePocket(el){
   document.querySelectorAll('#d_sidePocket .vent-pick').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
-  designData.d_sidePocket = el.dataset.v;
-  updateSummary();
+  S.pills['d_sidePocket'] = el.dataset.v;
 }
 function pickVent(el){
   document.querySelectorAll('#d_backVent .vent-pick').forEach(v=>v.classList.remove('sel'));
