@@ -1151,6 +1151,18 @@ input,textarea,select,button,option{
   font-weight:400;
   font-size:13px;
 }
+/* ── SUIT PRESETS ── */
+.preset-section{padding:14px 16px 10px;border-bottom:1px solid #f0ebe0;}
+.preset-section-hd{font-size:10px;font-family:'Prompt',sans-serif;color:#bbb;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}
+.preset-row{display:flex;gap:10px;flex-wrap:wrap;}
+.preset-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 14px 8px;border:1.5px solid #e8e2d8;border-radius:12px;cursor:pointer;background:#fff;min-width:80px;max-width:120px;transition:border-color .18s,background .18s,box-shadow .18s;}
+.preset-card:hover{border-color:var(--gold);background:#fffdf8;}
+.preset-card.sel{border-color:var(--gold);background:#fffdf8;box-shadow:0 0 0 1.5px var(--gold);}
+.preset-card svg{display:block;opacity:.8;}
+.preset-card.sel svg{opacity:1;}
+.preset-card-lbl{font-size:11px;font-family:'Prompt',sans-serif;color:#666;text-align:center;line-height:1.5;font-weight:500;}
+.preset-card.sel .preset-card-lbl{color:var(--gold);}
+.preset-card-sub{font-size:10px;color:#bbb;font-family:'Prompt',sans-serif;}
 </style>
 </head>
 <body>
@@ -1337,6 +1349,41 @@ input,textarea,select,button,option{
 
   <div class="card det-wrap" id="det-suit">
     <div class="card-hd th-reg" style="display:flex;align-items:center;gap:10px"><img src="data:image/svg+xml;base64,PHN2ZyPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMyMjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPCEtLSBNYWluIHJvbGwgYm9keSAtLT4KICA8IS0tIFRvcCBmYWNlIG9mIGN5bGluZGVyIChlbGxpcHNlKSAtLT4KICA8ZWxsaXBzZSBjeD0iNTIiIGN5PSIzMCIgcng9IjQwIiByeT0iMTQiIHN0cm9rZS13aWR0aD0iMiIvPgogIDwhLS0gQ3lsaW5kZXIgc2lkZXMgLS0+CiAgPGxpbmUgeDE9IjEyIiB5MT0iMzAiIHgyPSIxMiIgeTI9IjU4IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8bGluZSB4MT0iOTIiIHkxPSIzMCIgeDI9IjkyIiB5Mj0iNTgiIHN0cm9rZS13aWR0aD0iMiIvPgogIDwhLS0gQm90dG9tIGZhY2UgLS0+CiAgPGVsbGlwc2UgY3g9IjUyIiBjeT0iNTgiIHJ4PSI0MCIgcnk9IjE0IiBzdHJva2Utd2lkdGg9IjIiLz4KCiAgPCEtLSBJbm5lciBob2xlIC0gdG9wIHJpbmcgLS0+CiAgPGVsbGlwc2UgY3g9IjUyIiBjeT0iMzAiIHJ4PSIxMyIgcnk9IjQuNSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz4KICA8IS0tIElubmVyIGhvbGUgc2lkZXMgLS0+CiAgPGxpbmUgeDE9IjM5IiB5MT0iMzAiIHgyPSIzOSIgeTI9IjU2IiBzdHJva2Utd2lkdGg9IjEuNCIvPgogIDxsaW5lIHgxPSI2NSIgeTE9IjMwIiB4Mj0iNjUiIHkyPSI1NiIgc3Ryb2tlLXdpZHRoPSIxLjQiLz4KICA8IS0tIElubmVyIGhvbGUgYm90dG9tIHJpbmcgLS0+CiAgPGVsbGlwc2UgY3g9IjUyIiBjeT0iNTYiIHJ4PSIxMyIgcnk9IjQuNSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz4KCiAgPCEtLSBTdWJ0bGUgY3Jvc3MtaGF0Y2ggc2hhZGluZyBvbiBib2R5IGZvciAzRCBkZXB0aCAtLT4KICA8bGluZSB4MT0iMjIiIHkxPSIzMiIgeDI9IjIyIiB5Mj0iNTYiIHN0cm9rZS13aWR0aD0iMC43IiBvcGFjaXR5PSIwLjM1Ii8+CiAgPGxpbmUgeDE9IjMyIiB5MT0iMzMiIHgyPSIzMiIgeTI9IjU3IiBzdHJva2Utd2lkdGg9IjAuNyIgb3BhY2l0eT0iMC4zNSIvPgogIDxsaW5lIHgxPSI3MiIgeTE9IjMzIiB4Mj0iNzIiIHkyPSI1NyIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuMzUiLz4KICA8bGluZSB4MT0iODIiIHkxPSIzMiIgeDI9IjgyIiB5Mj0iNTYiIHN0cm9rZS13aWR0aD0iMC43IiBvcGFjaXR5PSIwLjM1Ii8+CgogIDwhLS0gVGFwZSB1bnJvbGxpbmcgdG8gdGhlIHJpZ2h0IC0tPgogIDwhLS0gVGFwZSBjb25uZWN0cyBmcm9tIGJvdHRvbS1yaWdodCBvZiByb2xsIC0tPgogIDwhLS0gVG9wIGVkZ2Ugb2YgdGFwZSAtLT4KICA8cGF0aCBkPSJNOTIgNDYgQzEwMCA0NSAxMDggNDYgMTE4IDQ0IEMxMjggNDIgMTM4IDQzIDE1MCA0MCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSBCb3R0b20gZWRnZSBvZiB0YXBlIC0tPgogIDxwYXRoIGQ9Ik05MiA1OCBDMTAwIDU4IDEwOCA1OSAxMTggNTcgQzEyOCA1NSAxMzggNTYgMTUwIDUzIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8IS0tIFJpZ2h0IGVuZCBvZiB0YXBlIC0tPgogIDxsaW5lIHgxPSIxNTAiIHkxPSI0MCIgeDI9IjE1MCIgeTI9IjUzIiBzdHJva2Utd2lkdGg9IjIiLz4KCiAgPCEtLSBUYXBlIGZpbGwgaGludCAobGlnaHQgZGlhZ29uYWwgbGluZXMgaW5zaWRlIHRhcGUpIC0tPgogIDxsaW5lIHgxPSI5NSIgeTE9IjQ3IiB4Mj0iOTUiIHkyPSI1NiIgc3Ryb2tlLXdpZHRoPSIwLjYiIG9wYWNpdHk9IjAuMiIvPgoKICA8IS0tIE1ham9yIHRpY2sgbWFya3MgKGV2ZXJ5IDVtbSkgLS0+CiAgPGxpbmUgeDE9IjEwMCIgeTE9IjQ2LjUiIHgyPSIxMDAiIHkyPSI1MS41IiBzdHJva2Utd2lkdGg9IjEuNCIvPgogIDxsaW5lIHgxPSIxMTAiIHkxPSI0NS41IiB4Mj0iMTEwIiB5Mj0iNTAuNSIgc3Ryb2tlLXdpZHRoPSIxLjQiLz4KICA8bGluZSB4MT0iMTIwIiB5MT0iNDUiIHgyPSIxMjAiIHkyPSI1MCIgc3Ryb2tlLXdpZHRoPSIxLjQiLz4KICA8bGluZSB4MT0iMTMwIiB5MT0iNDQuNSIgeDI9IjEzMCIgeTI9IjQ5LjUiIHN0cm9rZS13aWR0aD0iMS40Ii8+CiAgPGxpbmUgeDE9IjE0MCIgeTE9IjQ0IiB4Mj0iMTQwIiB5Mj0iNDkiIHN0cm9rZS13aWR0aD0iMS40Ii8+CgogIDwhLS0gTWlub3IgdGljayBtYXJrcyAtLT4KICA8bGluZSB4MT0iMTA1IiB5MT0iNDciIHgyPSIxMDUiIHkyPSI1MC41IiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTE1IiB5MT0iNDYuNSIgeDI9IjExNSIgeTI9IjUwIiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTI1IiB5MT0iNDYiIHgyPSIxMjUiIHkyPSI0OS41IiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTM1IiB5MT0iNDUuNSIgeDI9IjEzNSIgeTI9IjQ5IiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTQ1IiB5MT0iNDUiIHgyPSIxNDUiIHkyPSI0OC41IiBzdHJva2Utd2lkdGg9IjEiLz4KCiAgPCEtLSBTbWFsbGVzdCB0aWNrcyAtLT4KICA8bGluZSB4MT0iMTAyIiB5MT0iNDcuNSIgeDI9IjEwMiIgeTI9IjUwIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIxMDciIHkxPSI0NyIgeDI9IjEwNyIgeTI9IjQ5LjUiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjExMiIgeTE9IjQ2LjUiIHgyPSIxMTIiIHkyPSI0OSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8bGluZSB4MT0iMTE3IiB5MT0iNDYuNSIgeDI9IjExNyIgeTI9IjQ5IiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIxMjIiIHkxPSI0NiIgeDI9IjEyMiIgeTI9IjQ4LjUiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjEyNyIgeTE9IjQ2IiB4Mj0iMTI3IiB5Mj0iNDguNSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8bGluZSB4MT0iMTMyIiB5MT0iNDUuNSIgeDI9IjEzMiIgeTI9IjQ4IiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIxMzciIHkxPSI0NS41IiB4Mj0iMTM3IiB5Mj0iNDgiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjE0MiIgeTE9IjQ1IiB4Mj0iMTQyIiB5Mj0iNDcuNSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8bGluZSB4MT0iMTQ3IiB5MT0iNDUiIHgyPSIxNDciIHkyPSI0Ny41IiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8L3N2Zz4=" style="width:48px;height:30px;object-fit:contain;opacity:.85" alt=""><span class="card-hd-bold">Design</span><span class="card-hd-italic"> Details</span><span class="card-hd-type">Suit</span></div>
+    <!-- PRESETS -->
+    <div class="preset-section">
+      <div class="preset-section-hd">เลือก Preset</div>
+      <div class="preset-row" id="suitPresetBar">
+
+        <!-- DB Suit -->
+        <div class="preset-card" data-pid="db_suit" onclick="applySuitPreset('db_suit',this)">
+          <svg width="56" height="68" viewBox="0 0 56 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 16 L20 6 L8 14 L4 68 L52 68 L48 14 L36 6 Z" stroke="#444" stroke-width="1.3" fill="#f5f3ef" stroke-linejoin="round"/>
+            <path d="M28 16 L20 6 L12 20 L28 30" stroke="#444" stroke-width="1.2" fill="#edeae4" stroke-linejoin="round"/>
+            <path d="M28 16 L36 6 L44 20 L28 30" stroke="#444" stroke-width="1.2" fill="#edeae4" stroke-linejoin="round"/>
+            <line x1="28" y1="30" x2="28" y2="68" stroke="#bbb" stroke-width="0.7" stroke-dasharray="2.5,2"/>
+            <circle cx="22" cy="36" r="2.2" fill="#666"/><circle cx="34" cy="36" r="2.2" fill="#666"/>
+            <circle cx="22" cy="45" r="2.2" fill="#666"/><circle cx="34" cy="45" r="2.2" fill="#666"/>
+            <circle cx="22" cy="54" r="2.2" fill="#666"/><circle cx="34" cy="54" r="2.2" fill="#666"/>
+          </svg>
+          <div class="preset-card-lbl">DB เสื้อสูท<br><span class="preset-card-sub">6 กระดุม</span></div>
+        </div>
+
+        <!-- SB Suit -->
+        <div class="preset-card" data-pid="sb_suit" onclick="applySuitPreset('sb_suit',this)">
+          <svg width="56" height="68" viewBox="0 0 56 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 16 L20 6 L8 14 L4 68 L52 68 L48 14 L36 6 Z" stroke="#444" stroke-width="1.3" fill="#f5f3ef" stroke-linejoin="round"/>
+            <path d="M28 16 L20 6 L13 22 L26 32" stroke="#444" stroke-width="1.2" fill="#edeae4" stroke-linejoin="round"/>
+            <path d="M28 16 L36 6 L43 22 L30 32" stroke="#444" stroke-width="1.2" fill="#edeae4" stroke-linejoin="round"/>
+            <line x1="28" y1="32" x2="28" y2="68" stroke="#bbb" stroke-width="0.7" stroke-dasharray="2.5,2"/>
+            <circle cx="28" cy="40" r="2.2" fill="#666"/>
+            <circle cx="28" cy="52" r="2.2" fill="#666"/>
+          </svg>
+          <div class="preset-card-lbl">SB เสื้อสูท<br><span class="preset-card-sub">2 กระดุม</span></div>
+        </div>
+
+      </div>
+    </div>
+
     <div class="suit-layout">
 
       <!-- NAV SIDEBAR -->
@@ -3441,6 +3488,72 @@ function pickVent(el){
   document.querySelectorAll('#d_backVent .vent-pick').forEach(v=>v.classList.remove('sel'));
   el.classList.add('sel');
   S.pills['d_backVent'] = el.dataset.v;
+}
+
+// ── SUIT PRESETS ──
+const SUIT_PRESETS = {
+  db_suit: {
+    collar:      'ปกแหลม',
+    btnCount:    6,
+    btnThread:   'Navy (62)',
+    ringThread:  'Navy (62)',
+    lastRing:    'Navy (62)',
+    threadColor: 'Navy (62)',
+    chestPocket: 'ตรง',
+    sidePocket:  'ปก',
+    backVent:    'ไม่มีผ่า',
+  },
+  sb_suit: {
+    collar:      'ปกแหลม',
+    btnCount:    2,
+    btnThread:   'Navy (62)',
+    ringThread:  'Navy (62)',
+    lastRing:    'Navy (62)',
+    threadColor: 'Navy (62)',
+    chestPocket: 'ตรง',
+    sidePocket:  'ปก',
+    backVent:    'ไม่มีผ่า',
+  },
+};
+
+function applySuitPreset(pid, cardEl){
+  const p = SUIT_PRESETS[pid];
+  if(!p) return;
+
+  // highlight selected card
+  document.querySelectorAll('#suitPresetBar .preset-card').forEach(c=>c.classList.remove('sel'));
+  if(cardEl) cardEl.classList.add('sel');
+
+  // collar
+  const collarEl = document.querySelector(`#d_collar .collar-pick[data-v="${p.collar}"]`);
+  if(collarEl) pickCollar(collarEl);
+
+  // button count
+  const btnSpan = document.getElementById('d_btnCount');
+  if(btnSpan){ btnSpan.textContent = p.btnCount; S.btnCount = p.btnCount; }
+
+  // thread colors (use _cpApply so UI + hidden value both update)
+  const findColor = name => THREAD_COLORS.find(c=>c.name===name);
+  const applyColor = (wid, hid, name) => {
+    const c = findColor(name);
+    if(c) _cpApply(wid, hid, c.name, c.hex);
+  };
+  applyColor('cp_btnThread',   'd_btnThread',   p.btnThread);
+  applyColor('cp_ringThread',  'd_ringThread',  p.ringThread);
+  applyColor('cp_lastRing',    'd_lastRing',    p.lastRing);
+  applyColor('cp_threadColor', 'd_threadColor', p.threadColor);
+
+  // chest pocket
+  const chestEl = document.querySelector(`#d_chestPocket .pill[data-v="${p.chestPocket}"]`);
+  if(chestEl) togglePill(chestEl, 'd_chestPocket');
+
+  // side pocket
+  const sideEl = document.querySelector(`#d_sidePocket .vent-pick[data-v="${p.sidePocket}"]`);
+  if(sideEl) pickSidePocket(sideEl);
+
+  // back vent
+  const ventEl = document.querySelector(`#d_backVent .vent-pick[data-v="${p.backVent}"]`);
+  if(ventEl) pickVent(ventEl);
 }
 
 function pickBody(el){
