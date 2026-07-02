@@ -1165,6 +1165,17 @@ input,textarea,select,button,option{
 .preset-card-lbl{font-size:11px;font-family:'Prompt',sans-serif;color:#666;text-align:center;line-height:1.5;font-weight:500;}
 .preset-card.sel .preset-card-lbl{color:var(--gold);}
 .preset-card-sub{font-size:10px;color:#bbb;font-family:'Prompt',sans-serif;}
+/* ── Fabric Autocomplete ── */
+.fab-ac-wrap{position:relative;width:100%;}
+.fab-ac-drop{position:absolute;top:calc(100% + 2px);left:0;right:0;background:#fff;border:1px solid #e0ddd5;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.13);z-index:1200;display:none;max-height:260px;overflow-y:auto;}
+.fab-ac-item{display:flex;align-items:center;gap:8px;padding:8px 11px;cursor:pointer;border-bottom:1px solid #f5f3ef;}
+.fab-ac-item:last-child{border-bottom:none;}
+.fab-ac-item:hover{background:#fffdf7;}
+.fab-ac-code{font-weight:700;color:#1a1a1a;min-width:90px;font-family:'Prompt',sans-serif;font-size:12px;flex-shrink:0;}
+.fab-ac-name{flex:1;color:#666;font-size:11px;font-family:'Prompt',sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fab-ac-status{font-size:11px;flex-shrink:0;}
+.fab-ac-empty{padding:10px 12px;font-size:12px;color:#aaa;font-family:'Prompt',sans-serif;}
+.fab-ac-loading{padding:10px 12px;font-size:12px;color:#bbb;font-family:'Prompt',sans-serif;font-style:italic;}
 </style>
 </head>
 <body>
@@ -1359,31 +1370,31 @@ input,textarea,select,button,option{
         <!-- DB Suit -->
         <div class="preset-card" data-pid="db_suit" onclick="applySuitPreset('db_suit',this)">
           <img src="presets/db_suit.jpg" style="width:88px;height:106px;object-fit:cover;object-position:5% center;border-radius:4px;opacity:.88;display:block;">
-          <div class="preset-card-lbl">DB เสื้อสูท<br><span class="preset-card-sub">6 กระดุม</span></div>
+          <div class="preset-card-lbl">Navy Jacket<br><span class="preset-card-sub">6 กระดุม</span></div>
         </div>
 
         <!-- SB Suit -->
         <div class="preset-card" data-pid="sb_suit" onclick="applySuitPreset('sb_suit',this)">
           <img src="presets/sb_suit.jpg" style="width:88px;height:106px;object-fit:cover;object-position:5% center;border-radius:4px;opacity:.88;display:block;">
-          <div class="preset-card-lbl">SB เสื้อสูท<br><span class="preset-card-sub">2 กระดุม</span></div>
+          <div class="preset-card-lbl">Black Jacket<br><span class="preset-card-sub">ปกกล้วยซาติน</span></div>
         </div>
 
         <!-- Grey SB Women's Blazer -->
         <div class="preset-card" data-pid="grey_sb_women" onclick="applySuitPreset('grey_sb_women',this)">
           <img src="presets/grey_sb_women.jpg" style="width:88px;height:106px;object-fit:cover;border-radius:4px;opacity:.88;display:block;">
-          <div class="preset-card-lbl">SB สูทหญิง<br><span class="preset-card-sub">เทา 1 กระดุม</span></div>
+          <div class="preset-card-lbl">Gray Jacket<br><span class="preset-card-sub">เทา 1 กระดุม</span></div>
         </div>
 
         <!-- Beige DB Women's Blazer -->
         <div class="preset-card" data-pid="beige_db_women" onclick="applySuitPreset('beige_db_women',this)">
           <img src="presets/beige_db_women.jpg" style="width:88px;height:106px;object-fit:cover;border-radius:4px;opacity:.88;display:block;">
-          <div class="preset-card-lbl">DB สูทหญิง<br><span class="preset-card-sub">เบจ 4 กระดุม</span></div>
+          <div class="preset-card-lbl">Beige Jacket<br><span class="preset-card-sub">เบจ 4 กระดุม</span></div>
         </div>
 
         <!-- Pink DB Women's Blazer -->
         <div class="preset-card" data-pid="pink_db_women" onclick="applySuitPreset('pink_db_women',this)">
           <img src="presets/Pinkpink_db_women.jpg" style="width:88px;height:106px;object-fit:cover;border-radius:4px;opacity:.88;display:block;">
-          <div class="preset-card-lbl">DB สูทหญิง<br><span class="preset-card-sub">Rose Pink</span></div>
+          <div class="preset-card-lbl">Rose Pink Jacket<br><span class="preset-card-sub">Rose Pink</span></div>
         </div>
 
       </div>
@@ -3059,11 +3070,70 @@ function renderTape(page){
   // legacy compat – do nothing, updSteps handles new header
 }
 
-// ── SUBMIT ──
+// ── SUBMIT → GOOGLE SHEETS ──
+// วาง Web App URL จาก Google Apps Script ตรงนี้:
+const GSHEET_WEB_APP_URL = '';
+
 function doSubmit(){
-  const msg=document.getElementById('submitMsg');
-  msg.style.display='block';
-  msg.textContent='✔ บันทึกรายการเรียบร้อยแล้ว';
+  const msg = document.getElementById('submitMsg');
+  msg.style.display = 'block';
+
+  if (!GSHEET_WEB_APP_URL) {
+    msg.style.color = '#e74c3c';
+    msg.textContent = '⚠ ยังไม่ได้ตั้งค่า Google Sheet URL';
+    return;
+  }
+
+  msg.style.color = '#999';
+  msg.textContent = '⏳ กำลังบันทึก…';
+
+  // รวบรวมข้อมูลทั้งหมด
+  const val = id => (document.getElementById(id)||{}).value || '';
+  const prefix = S.gtype==='trouser'?'tr' : S.gtype==='vest'?'vest' : S.gtype==='shirt'?'sh' : 'suit';
+
+  // การวัด
+  const measObj = {};
+  (MFIELDS[S.gtype]||[]).forEach(f => {
+    measObj[f.l] = (document.getElementById(`m_${S.gtype}_${f.n}`)||{}).value || '';
+  });
+
+  const payload = {
+    name:          val('f_name'),
+    gender:        val('f_gender'),
+    phone:         val('f_phone'),
+    height:        val('f_height'),
+    weight:        val('f_weight'),
+    branchBuy:     val('f_branchBuy'),
+    branchPickup:  val('f_branchPickup'),
+    pickupDate:    val('f_pickupDate').replace('T',' '),
+    staff:         val('f_staff'),
+    team:          val('f_team'),
+    body:          val('f_body'),
+    type:          GLBL[S.gtype] || S.gtype,
+    fastTrack:     S.ft ? 'ใช่' : 'ไม่ใช่',
+    fabricMain:    val(`${prefix}_fabric_main`),
+    fabricSec:     val(`${prefix}_fabric_sec`),
+    design:        JSON.stringify(S.pills),
+    btnCount:      S.btnCount,
+    bStyle:        S.bStyle,
+    measurements:  JSON.stringify(measObj),
+    notes:         val('f_notes'),
+  };
+
+  fetch(GSHEET_WEB_APP_URL, {
+    method:  'POST',
+    mode:    'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify(payload)
+  })
+  .then(() => {
+    msg.style.color = '#00a650';
+    msg.textContent = '✔ บันทึกรายการเรียบร้อยแล้ว';
+  })
+  .catch(() => {
+    msg.style.color = '#e74c3c';
+    msg.textContent = '✘ บันทึกไม่สำเร็จ กรุณาลองใหม่';
+  });
 }
 
 
@@ -3869,6 +3939,95 @@ document.addEventListener('DOMContentLoaded',function(){
     ['cp_threadColor','d_threadColor'],
     ['cp_trThread','d_trThread'],
   ].forEach(([wid,hid])=>buildColorPicker(wid,hid));
+
+  // ── Fabric Autocomplete ──
+  const FABRIC_CSV_URL = 'https://docs.google.com/spreadsheets/d/1P7xAYauIfYNJq8GP5K8DeyeUYAUsERblCvfZRYQcEGc/export?format=csv&gid=71543023';
+  let FABRIC_DB = [];
+  let FABRIC_LOADED = false;
+
+  function parseCSVLine(line) {
+    const res = []; let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') { inQ = !inQ; continue; }
+      if (c === ',' && !inQ) { res.push(cur.trim()); cur = ''; continue; }
+      cur += c;
+    }
+    res.push(cur.trim());
+    return res;
+  }
+
+  async function fetchFabricDB() {
+    try {
+      const r = await fetch(FABRIC_CSV_URL);
+      const text = await r.text();
+      const lines = text.trim().split('\n').slice(1); // skip header
+      FABRIC_DB = lines.map(l => {
+        const c = parseCSVLine(l);
+        return { code: c[0]||'', name: c[1]||'', inStock: (c[3]||'').includes('In-Stock') };
+      }).filter(r => r.code);
+      FABRIC_LOADED = true;
+    } catch(e) { console.warn('FabricDB fetch error', e); }
+  }
+
+  function pickFabric(el, inputId) {
+    const inp = document.getElementById(inputId);
+    if (inp) { inp.value = el.dataset.code; }
+    const drop = el.closest('.fab-ac-drop');
+    if (drop) drop.style.display = 'none';
+  }
+
+  function initFabricAC(inputId) {
+    const inp = document.getElementById(inputId);
+    if (!inp) return;
+    // Wrap
+    const wrap = document.createElement('div');
+    wrap.className = 'fab-ac-wrap';
+    inp.parentNode.insertBefore(wrap, inp);
+    wrap.appendChild(inp);
+    const drop = document.createElement('div');
+    drop.className = 'fab-ac-drop';
+    wrap.appendChild(drop);
+
+    function showDrop() {
+      const q = inp.value.trim().toLowerCase();
+      if (!q) { drop.style.display = 'none'; return; }
+      if (!FABRIC_LOADED) {
+        drop.innerHTML = '<div class="fab-ac-loading">กำลังโหลดข้อมูลผ้า…</div>';
+        drop.style.display = 'block'; return;
+      }
+      const hits = FABRIC_DB.filter(r =>
+        r.code.toLowerCase().includes(q) || r.name.toLowerCase().includes(q)
+      ).slice(0, 40);
+      if (!hits.length) {
+        drop.innerHTML = '<div class="fab-ac-empty">ไม่พบรหัสผ้า</div>';
+        drop.style.display = 'block'; return;
+      }
+      drop.innerHTML = hits.map(r =>
+        `<div class="fab-ac-item" data-code="${r.code.replace(/"/g,'&quot;')}" onclick="pickFabric(this,'${inputId}')">
+          <span class="fab-ac-code">${r.code}</span>
+          <span class="fab-ac-name">${r.name}</span>
+          <span class="fab-ac-status">${r.inStock ? '🟢' : '🔴'}</span>
+        </div>`
+      ).join('');
+      drop.style.display = 'block';
+    }
+
+    inp.addEventListener('input', showDrop);
+    inp.addEventListener('focus', showDrop);
+    inp.addEventListener('blur', () => setTimeout(() => { drop.style.display = 'none'; }, 200));
+    inp.setAttribute('autocomplete','off');
+  }
+
+  // Init autocomplete for all fabric inputs
+  ['suit_fabric_main','suit_fabric_sec',
+   'tr_fabric_main','tr_fabric_sec',
+   'vest_fabric_main','vest_fabric_sec',
+   'sh_fabric_main','sh_fabric_sec'
+  ].forEach(initFabricAC);
+
+  // Fetch DB in background
+  fetchFabricDB();
 });
 
 </script>
