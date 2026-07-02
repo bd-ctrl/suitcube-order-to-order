@@ -4013,7 +4013,6 @@ function initFabricAC(inputId) {
     drop.innerHTML = hits.map(row =>
       `<div class="fab-ac-item" data-code="${row.code.replace(/"/g,'&quot;')}" onclick="pickFabric(this,'${inputId}')">
         <span class="fab-ac-code">${row.code}</span>
-        <span class="fab-ac-name">${row.name}</span>
         <span class="fab-ac-status">${row.inStock ? '🟢' : '🔴'}</span>
       </div>`
     ).join('');
