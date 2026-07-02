@@ -1381,6 +1381,23 @@ input,textarea,select,button,option{
           <div class="preset-card-lbl">SB เสื้อสูท<br><span class="preset-card-sub">2 กระดุม</span></div>
         </div>
 
+        <!-- Grey SB Women's Blazer -->
+        <div class="preset-card" data-pid="grey_sb_women" onclick="applySuitPreset('grey_sb_women',this)">
+          <svg width="56" height="68" viewBox="0 0 56 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 15 L20 5 L7 13 L4 44 L5 68 L51 68 L52 44 L49 13 L36 5 Z" stroke="#888" stroke-width="1.3" fill="#dedad4" stroke-linejoin="round"/>
+            <path d="M28 15 L20 5 L13 19 L24 27" stroke="#888" stroke-width="1.2" fill="#ccc9c3" stroke-linejoin="round"/>
+            <line x1="13" y1="19" x2="20" y2="15" stroke="#888" stroke-width="0.9"/>
+            <path d="M28 15 L36 5 L43 19 L32 27" stroke="#888" stroke-width="1.2" fill="#ccc9c3" stroke-linejoin="round"/>
+            <line x1="43" y1="19" x2="36" y2="15" stroke="#888" stroke-width="0.9"/>
+            <line x1="28" y1="27" x2="28" y2="68" stroke="#aaa" stroke-width="0.7" stroke-dasharray="2.5,2"/>
+            <circle cx="28" cy="40" r="2.3" fill="#8a7040"/>
+            <!-- Flap pockets -->
+            <rect x="10" y="48" width="14" height="5" rx="1" stroke="#888" stroke-width="0.8" fill="#d4d0ca"/>
+            <rect x="32" y="48" width="14" height="5" rx="1" stroke="#888" stroke-width="0.8" fill="#d4d0ca"/>
+          </svg>
+          <div class="preset-card-lbl">SB สูทหญิง<br><span class="preset-card-sub">เทา 1 กระดุม</span></div>
+        </div>
+
         <!-- Pink DB Women's Blazer -->
         <div class="preset-card" data-pid="pink_db_women" onclick="applySuitPreset('pink_db_women',this)">
           <svg width="56" height="68" viewBox="0 0 56 68" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -3532,6 +3549,15 @@ const SUIT_PRESETS = {
     lastRing:    'Rose Pink (25)',
     threadColor: 'Rose Pink (25)',
     chestPocket: 'โค้ง',
+    sidePocket:  'ปก',
+    backVent:    'ผ่ากลาง',
+    emb:         'ไม่ปัก',
+  },
+  grey_sb_women: {
+    collar:      'ปกธรรมดา',
+    bStyle:      '1เม็ด',
+    btnCount:    1,
+    chestPocket: 'ไม่มี',
     sidePocket:  'ปก',
     backVent:    'ผ่ากลาง',
     emb:         'ไม่ปัก',
