@@ -1370,31 +1370,31 @@ input,textarea,select,button,option{
         <!-- DB Suit -->
         <div class="preset-card" data-pid="db_suit" onclick="applySuitPreset('db_suit',this)">
           <img src="presets/db_suit.jpg" style="width:88px;height:106px;object-fit:cover;object-position:5% center;border-radius:4px;opacity:.88;display:block;">
-          <div class="preset-card-lbl">Navy Jacket<br><span class="preset-card-sub">6 กระดุม</span></div>
+          <div class="preset-card-lbl">Navy Jacket</div>
         </div>
 
         <!-- SB Suit -->
         <div class="preset-card" data-pid="sb_suit" onclick="applySuitPreset('sb_suit',this)">
           <img src="presets/sb_suit.jpg" style="width:88px;height:106px;object-fit:cover;object-position:5% center;border-radius:4px;opacity:.88;display:block;">
-          <div class="preset-card-lbl">Black Jacket<br><span class="preset-card-sub">ปกกล้วยซาติน</span></div>
+          <div class="preset-card-lbl">Black Jacket</div>
         </div>
 
         <!-- Grey SB Women's Blazer -->
         <div class="preset-card" data-pid="grey_sb_women" onclick="applySuitPreset('grey_sb_women',this)">
           <img src="presets/grey_sb_women.jpg" style="width:88px;height:106px;object-fit:cover;border-radius:4px;opacity:.88;display:block;">
-          <div class="preset-card-lbl">Gray Jacket<br><span class="preset-card-sub">เทา 1 กระดุม</span></div>
+          <div class="preset-card-lbl">Gray Jacket</div>
         </div>
 
         <!-- Beige DB Women's Blazer -->
         <div class="preset-card" data-pid="beige_db_women" onclick="applySuitPreset('beige_db_women',this)">
           <img src="presets/beige_db_women.jpg" style="width:88px;height:106px;object-fit:cover;border-radius:4px;opacity:.88;display:block;">
-          <div class="preset-card-lbl">Beige Jacket<br><span class="preset-card-sub">เบจ 4 กระดุม</span></div>
+          <div class="preset-card-lbl">Beige Jacket</div>
         </div>
 
         <!-- Pink DB Women's Blazer -->
         <div class="preset-card" data-pid="pink_db_women" onclick="applySuitPreset('pink_db_women',this)">
           <img src="presets/Pinkpink_db_women.jpg" style="width:88px;height:106px;object-fit:cover;border-radius:4px;opacity:.88;display:block;">
-          <div class="preset-card-lbl">Rose Pink Jacket<br><span class="preset-card-sub">Rose Pink</span></div>
+          <div class="preset-card-lbl">Rose Pink Jacket</div>
         </div>
 
       </div>
@@ -1797,6 +1797,10 @@ input,textarea,select,button,option{
           </div>
         </div>
       </div>
+      <div style="padding:12px 16px 16px">
+        <div class="fabric-lbl-th" style="margin-bottom:6px">หมายเหตุ</div>
+        <textarea id="suit_notes" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
+      </div>
 
     </div><!-- /suit-layout -->
   </div><!-- /det-suit -->
@@ -2046,6 +2050,10 @@ input,textarea,select,button,option{
           </div>
         </div>
       </div>
+      <div style="padding:12px 16px 16px">
+        <div class="fabric-lbl-th" style="margin-bottom:6px">หมายเหตุ</div>
+        <textarea id="tr_notes" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
+      </div>
     </div><!-- /suit-layout trouser -->
   </div>
 
@@ -2170,6 +2178,10 @@ input,textarea,select,button,option{
             <input class="finp" id="vest_fabric_sec" type="text" autocomplete="off">
           </div>
         </div>
+      </div>
+      <div style="padding:12px 16px 16px">
+        <div class="fabric-lbl-th" style="margin-bottom:6px">หมายเหตุ</div>
+        <textarea id="vest_notes" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
       </div>
     </div><!-- /suit-layout vest -->
   </div>
@@ -2306,6 +2318,10 @@ input,textarea,select,button,option{
             <input class="finp" id="sh_fabric_sec" type="text" autocomplete="off">
           </div>
         </div>
+      </div>
+      <div style="padding:12px 16px 16px">
+        <div class="fabric-lbl-th" style="margin-bottom:6px">หมายเหตุ</div>
+        <textarea id="sh_notes" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
       </div>
     </div><!-- /suit-layout shirt -->
   </div>
@@ -3117,7 +3133,7 @@ function doSubmit(){
     btnCount:      S.btnCount,
     bStyle:        S.bStyle,
     measurements:  JSON.stringify(measObj),
-    notes:         val('f_notes'),
+    notes:         val(`${prefix}_notes`),
   };
 
   fetch(GSHEET_WEB_APP_URL, {
