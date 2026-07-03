@@ -3985,8 +3985,8 @@ async function fetchFabricDB() {
     } catch(e) { console.warn('FabricDB via Apps Script failed', e); }
   }
   try {
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/1X41oyjicFpiu_aJC5y-ibIMsB0stKF1n7CD1CnUUljA/export?format=csv&gid=0';
-    const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(CSV_URL));
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/https://docs.google.com/spreadsheets/d/e/2PACX-1vQGkCtn9Gtfr-6prn82J7nREAK6D8UU1pTY9lN-8CqbEcc68mEnCLYg5hQE43QZWIMLzF44K_WNcK0H/pub?gid=0&single=true&output=csv';
+    const r = await fetch(CSV_URL);
     const text = await r.text();
     const lines = text.trim().split('\n').slice(1);
     FABRIC_DB = lines.map(l => {
