@@ -3985,7 +3985,7 @@ async function fetchFabricDB() {
     } catch(e) { console.warn('FabricDB via Apps Script failed', e); }
   }
   try {
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/https://docs.google.com/spreadsheets/d/e/2PACX-1vQGkCtn9Gtfr-6prn82J7nREAK6D8UU1pTY9lN-8CqbEcc68mEnCLYg5hQE43QZWIMLzF44K_WNcK0H/pub?gid=0&single=true&output=csv';
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQGkCtn9Gtfr-6prn82J7nREAK6D8UU1pTY9lN-8CqbEcc68mEnCLYg5hQE43QZWIMLzF44K_WNcK0H/pub?gid=0&single=true&output=csv';
     const r = await fetch(CSV_URL);
     const text = await r.text();
     const lines = text.trim().split('\n').slice(1);
