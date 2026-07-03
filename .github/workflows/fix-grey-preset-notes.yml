@@ -1,0 +1,55 @@
+name: Fix Grey Preset and Notes Position
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply fixes
+        run: |
+          cat > /tmp/fix.py << 'PYEOF'
+          with open('index.html', 'r', encoding='utf-8') as f:
+              c = f.read()
+
+          # Fix 1: Add grey thread colors to grey_sb_women preset
+          marker = "grey_sb_women: {"
+          idx = c.find(marker)
+          if idx >= 0:
+              sub = c[idx:idx+300]
+              btn_idx = sub.find("btnCount:    1,")
+              if btn_idx >= 0 and "btnThread" not in sub:
+                  abs_idx = idx + btn_idx + len("btnCount:    1,")
+                  insert = "
+    btnThread:   'Grey (70)',
+    ringThread:  'Grey (70)',
+    lastRing:    'Grey (70)',
+    threadColor: 'Grey (70)',"
+                  c = c[:abs_idx] + insert + c[abs_idx:]
+                  print("Preset: grey thread colors added")
+              else:
+                  print("Preset: already has btnThread or not found")
+          else:
+              print("ERROR: grey_sb_women not found")
+
+          # Fix 2: Move notes from left (grid-column:1) to right (grid-column:2)
+          old = "padding:12px 16px 16px;grid-column:1"
+          new = "padding:12px 16px 16px;grid-column:2"
+          count = c.count(old)
+          c = c.replace(old, new)
+          print(f"Notes: moved {count} divs to right column")
+
+          with open('index.html', 'w', encoding='utf-8') as f:
+              f.write(c)
+          print("Done")
+          PYEOF
+          python3 /tmp/fix.py
+      - name: Commit
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "github-actions[bot]"
+          git add index.html
+          git diff --cached --quiet || git commit -m "Fix: grey preset thread colors + notes to right column"
+          git push || true
