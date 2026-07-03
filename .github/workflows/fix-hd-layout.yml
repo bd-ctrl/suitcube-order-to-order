@@ -1,0 +1,37 @@
+name: Fix Card Header Layout
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-layout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix card-hd layout
+        run: |
+          python3 << 'EOF'
+          import re
+          with open('index.html', 'r', encoding='utf-8') as f:
+              content = f.read()
+          content = content.replace(
+              'flex-wrap:wrap;justify-content:flex-end;',
+              'flex-wrap:wrap;'
+          )
+          content = content.replace(
+              'color:var(--gold2);margin-left:6px;',
+              'color:var(--gold2);margin-left:auto;'
+          )
+          with open('index.html', 'w', encoding='utf-8') as f:
+              f.write(content)
+          print('Done!')
+          EOF
+      - name: Commit
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "github-actions[bot]"
+          git add index.html
+          git diff --cached --quiet || git commit -m "Style: heading left, type badge right"
+          git push || true
