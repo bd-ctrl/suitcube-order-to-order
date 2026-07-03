@@ -1,0 +1,57 @@
+name: Fix Heading Style
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply heading style changes
+        run: |
+          python3 << 'EOF'
+          import re
+          with open('index.html', 'r', encoding='utf-8') as f:
+              content = f.read()
+
+          # 1. Add thin weight to Playwrite MX Guides import
+          content = content.replace(
+              'family=Playwrite+MX+Guides&',
+              'family=Playwrite+MX+Guides:wght@100;200;300;400&'
+          )
+
+          # 2. card-hd-bold: font-weight 700 -> 100 (thin)
+          content = re.sub(
+              r'(\.card-hd-bold\{[^}]*?)font-weight:\d+',
+              r'\1font-weight:100',
+              content
+          )
+
+          # 3. card-hd-italic: font-weight 400 -> 100 (thin)
+          content = re.sub(
+              r'(\.card-hd-italic\{[^}]*?)font-weight:\d+',
+              r'\1font-weight:100',
+              content
+          )
+
+          # 4. card-hd: add justify-content:flex-end to right-align
+          content = re.sub(
+              r'(\.card-hd\{[^}]*?display:flex;align-items:center;gap:12px;flex-wrap:wrap;)',
+              r'\1justify-content:flex-end;',
+              content
+          )
+
+          with open('index.html', 'w', encoding='utf-8') as f:
+              f.write(content)
+          print('Done!')
+          EOF
+      - name: Commit
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "github-actions[bot]"
+          git add index.html
+          git diff --cached --quiet || git commit -m "Style: thin font weight + right-align for section headings"
+          git push || true
