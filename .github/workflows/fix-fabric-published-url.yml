@@ -1,0 +1,30 @@
+name: Fix Fabric Published URL
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update fabric DB URL
+        run: |
+          cat > /tmp/fix.py << 'PYEOF'
+          pub = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQGkCtn9Gtfr-6prn82J7nREAK6D8UU1pTY9lN-8CqbEcc68mEnCLYg5hQE43QZWIMLzF44K_WNcK0H/pub?gid=0&single=true&output=csv'
+          with open('index.html', 'r', encoding='utf-8') as f:
+              c = f.read()
+          c = c.replace('1X41oyjicFpiu_aJC5y-ibIMsB0stKF1n7CD1CnUUljA/export?format=csv&gid=0', pub)
+          c = c.replace("'https://corsproxy.io/?' + encodeURIComponent(CSV_URL)", 'CSV_URL')
+          with open('index.html', 'w', encoding='utf-8') as f:
+              f.write(c)
+          print('Done')
+          PYEOF
+          python3 /tmp/fix.py
+      - name: Commit
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "github-actions[bot]"
+          git add index.html
+          git diff --cached --quiet || git commit -m "Fix: use published CSV URL for fabric DB directly"
+          git push || true
