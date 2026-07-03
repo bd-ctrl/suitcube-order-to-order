@@ -1,0 +1,33 @@
+name: Fix Fabric URL Doubled
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix doubled URL
+        run: |
+          cat > /tmp/fix.py << 'PYEOF'
+          with open('index.html', 'r', encoding='utf-8') as f:
+              c = f.read()
+          bad = 'https://docs.google.com/spreadsheets/d/https://docs.google.com/spreadsheets/d/e/2PACX-1vQGkCtn9Gtfr-6prn82J7nREAK6D8UU1pTY9lN-8CqbEcc68mEnCLYg5hQE43QZWIMLzF44K_WNcK0H/pub?gid=0&single=true&output=csv'
+          good = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQGkCtn9Gtfr-6prn82J7nREAK6D8UU1pTY9lN-8CqbEcc68mEnCLYg5hQE43QZWIMLzF44K_WNcK0H/pub?gid=0&single=true&output=csv'
+          if bad in c:
+              c = c.replace(bad, good)
+              with open('index.html', 'w', encoding='utf-8') as f:
+                  f.write(c)
+              print('Fixed!')
+          else:
+              print('Not found')
+          PYEOF
+          python3 /tmp/fix.py
+      - name: Commit
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "github-actions[bot]"
+          git add index.html
+          git diff --cached --quiet || git commit -m "Fix: correct doubled fabric CSV URL"
+          git push || true
