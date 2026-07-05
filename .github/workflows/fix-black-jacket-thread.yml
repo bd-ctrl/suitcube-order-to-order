@@ -1,4 +1,4 @@
-name: Fix Black Jacket Thread Colors
+name: Fix Black Jacket Thread Colors v2
 on:
   workflow_dispatch:
 permissions:
@@ -10,34 +10,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Apply fix
         run: |
-          python3 -c "
-          with open('index.html', 'r', encoding='utf-8') as f:
-              c = f.read()
-          old = '''  sb_suit: {
-    collar:      chr(39)ปกแหลมchr(39),
-    btnCount:    2,
-    btnThread:   chr(39)Navy (62)chr(39),
-    ringThread:  chr(39)Navy (62)chr(39),
-    lastRing:    chr(39)Navy (62)chr(39),
-    threadColor: chr(39)Navy (62)chr(39),'''
-          new = '''  sb_suit: {
-    collar:      chr(39)ปกแหลมchr(39),
-    btnCount:    2,
-    btnThread:   chr(39)Classic Black (6)chr(39),
-    ringThread:  chr(39)Classic Black (6)chr(39),
-    lastRing:    chr(39)Classic Black (6)chr(39),
-    threadColor: chr(39)Classic Black (6)chr(39),'''
-          q = chr(39)
-          old = old.replace('chr(39)', q)
-          new = new.replace('chr(39)', q)
-          if old in c:
-              c = c.replace(old, new)
-              print('Done: sb_suit -> Classic Black (6)')
-          else:
-              print('ERROR: pattern not found')
-          with open('index.html', 'w', encoding='utf-8') as f:
-              f.write(c)
-          "
+          echo "aW1wb3J0IHJlCndpdGggb3BlbigiaW5kZXguaHRtbCIsICJyIiwgZW5jb2Rpbmc9InV0Zi04IikgYXMgZjoKICAgIGMgPSBmLnJlYWQoKQpzdGFydCA9IGMuZmluZCgic2Jfc3VpdDogeyIpCmlmIHN0YXJ0IDwgMDoKICAgIHByaW50KCJFUlJPUjogc2Jfc3VpdCBub3QgZm91bmQiKQplbHNlOgogICAgZW5kID0gYy5maW5kKCJ9LCIsIHN0YXJ0KSArIDIKICAgIGJsb2NrID0gY1tzdGFydDplbmRdCiAgICBuZXdfYmxvY2sgPSBibG9jay5yZXBsYWNlKCJOYXZ5ICg2MikiLCAiQ2xhc3NpYyBCbGFjayAoNikiKQogICAgY291bnQgPSBibG9jay5jb3VudCgiTmF2eSAoNjIpIikKICAgIHJlc3VsdCA9IGNbOnN0YXJ0XSArIG5ld19ibG9jayArIGNbZW5kOl0KICAgIHdpdGggb3BlbigiaW5kZXguaHRtbCIsICJ3IiwgZW5jb2Rpbmc9InV0Zi04IikgYXMgZjoKICAgICAgICBmLndyaXRlKHJlc3VsdCkKICAgIHByaW50KGYiRG9uZTogcmVwbGFjZWQge2NvdW50fSBvY2N1cnJlbmNlcyBpbiBzYl9zdWl0IikK" | base64 -d | python3
       - name: Commit and push
         run: |
           git config user.email "action@github.com"
