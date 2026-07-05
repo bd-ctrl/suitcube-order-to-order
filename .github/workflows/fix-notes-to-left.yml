@@ -1,0 +1,20 @@
+name: Fix Notes to Left Column
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Move notes textarea to left column
+        run: |
+          echo "d2l0aCBvcGVuKCJpbmRleC5odG1sIiwgInIiLCBlbmNvZGluZz0idXRmLTgiKSBhcyBmOgogICAgYyA9IGYucmVhZCgpCmNvdW50ID0gYy5jb3VudCgicGFkZGluZzoxMnB4IDE2cHggMTZweDtncmlkLWNvbHVtbjoyIikKYyA9IGMucmVwbGFjZSgicGFkZGluZzoxMnB4IDE2cHggMTZweDtncmlkLWNvbHVtbjoyIiwgInBhZGRpbmc6MTJweCAxNnB4IDE2cHg7Z3JpZC1jb2x1bW46MSIpCnByaW50KGYiUmV2ZXJ0ZWQge2NvdW50fSBub3RlcyBkaXZzIHRvIGxlZnQgY29sdW1uIikKd2l0aCBvcGVuKCJpbmRleC5odG1sIiwgInciLCBlbmNvZGluZz0idXRmLTgiKSBhcyBmOgogICAgZi53cml0ZShjKQo=" | base64 -d | python3
+      - name: Commit and push
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "github-actions[bot]"
+          git add index.html
+          git diff --cached --quiet || git commit -m "Fix: Move notes textarea to left column (grid-column:1)"
+          git push || true
