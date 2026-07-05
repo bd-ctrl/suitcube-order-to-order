@@ -1,0 +1,47 @@
+name: Fix Black Jacket Thread Colors
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply fix
+        run: |
+          python3 -c "
+          with open('index.html', 'r', encoding='utf-8') as f:
+              c = f.read()
+          old = '''  sb_suit: {
+    collar:      chr(39)ปกแหลมchr(39),
+    btnCount:    2,
+    btnThread:   chr(39)Navy (62)chr(39),
+    ringThread:  chr(39)Navy (62)chr(39),
+    lastRing:    chr(39)Navy (62)chr(39),
+    threadColor: chr(39)Navy (62)chr(39),'''
+          new = '''  sb_suit: {
+    collar:      chr(39)ปกแหลมchr(39),
+    btnCount:    2,
+    btnThread:   chr(39)Classic Black (6)chr(39),
+    ringThread:  chr(39)Classic Black (6)chr(39),
+    lastRing:    chr(39)Classic Black (6)chr(39),
+    threadColor: chr(39)Classic Black (6)chr(39),'''
+          q = chr(39)
+          old = old.replace('chr(39)', q)
+          new = new.replace('chr(39)', q)
+          if old in c:
+              c = c.replace(old, new)
+              print('Done: sb_suit -> Classic Black (6)')
+          else:
+              print('ERROR: pattern not found')
+          with open('index.html', 'w', encoding='utf-8') as f:
+              f.write(c)
+          "
+      - name: Commit and push
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "github-actions[bot]"
+          git add index.html
+          git diff --cached --quiet || git commit -m "Fix: Black Jacket sb_suit thread colors -> Classic Black (6)"
+          git push || true
