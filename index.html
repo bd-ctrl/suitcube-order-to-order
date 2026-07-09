@@ -1212,6 +1212,7 @@ input,textarea,select,button,option{
 
 /* preset labels hidden */
 .preset-card-lbl{display:none!important}
+.preset-section-hd{display:none!important}
 /* draft */
 .draft-save-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--gold);color:#1a1a1a;border:none;border-radius:8px;font-size:13px;font-family:'Prompt',sans-serif;font-weight:500;cursor:pointer;}
 .draft-view-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:transparent;color:var(--gold);border:1.5px solid var(--gold);border-radius:8px;font-size:12px;font-family:'Prompt',sans-serif;cursor:pointer;}
@@ -1434,7 +1435,7 @@ input,textarea,select,button,option{
 
       </div>
       <div id="presetPreviewSuit" style="display:none;padding:10px 0 0;text-align:center;">
-        <img id="presetPreviewSuitImg" style="max-height:260px;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.15);object-fit:cover;object-position:top;">
+        <img id="presetPreviewSuitImg" style="max-width:100%;max-height:480px;border-radius:8px;object-fit:contain;object-position:top;">
       </div>
     </div>
 
@@ -2112,7 +2113,7 @@ input,textarea,select,button,option{
 
     <!-- Vest Presets -->
     <div style="padding:12px 16px 0">
-      <div class="flbl" style="margin-bottom:8px;font-size:11px;color:#aaa;letter-spacing:.5px">PRESETS</div>
+      
       <div class="preset-row" id="vestPresetBar">
 
         <!-- Brown SB Vest Notch -->
@@ -2129,7 +2130,7 @@ input,textarea,select,button,option{
 
       </div>
       <div id="presetPreviewVest" style="display:none;padding:10px 0 0;text-align:center;">
-        <img id="presetPreviewVestImg" style="max-height:260px;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.15);object-fit:cover;object-position:top;">
+        <img id="presetPreviewVestImg" style="max-width:100%;max-height:480px;border-radius:8px;object-fit:contain;object-position:top;">
       </div>
     </div>
 
