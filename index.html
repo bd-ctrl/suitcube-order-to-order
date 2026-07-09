@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- v41 -->
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -189,35 +190,6 @@ body{
 .fg3{grid-template-columns:1fr 1fr 1fr}
 .fg4{grid-template-columns:1fr 1fr 1fr 1fr}
 .fg5{grid-template-columns:2fr 1.3fr 0.6fr 0.8fr 0.8fr}
-.fg6{grid-template-columns:1.3fr 1.8fr 0.9fr 0.6fr 0.7fr 0.7fr}
-
-/* ── STAFF AUTOCOMPLETE (Salesforce) ── */
-.staff-dd{
-  position:absolute;top:100%;left:0;right:0;z-index:200;
-  background:#fff;border:1px solid var(--inp-border);border-radius:10px;
-  box-shadow:0 6px 20px rgba(0,0,0,.1);
-  max-height:240px;overflow-y:auto;margin-top:4px;
-}
-.staff-dd-item{
-  padding:10px 14px;font-family:'Prompt',sans-serif;font-size:14px;font-weight:300;
-  color:var(--text);cursor:pointer;border-bottom:1px solid #f5f5f5;
-}
-.staff-dd-item:last-child{border-bottom:none}
-.staff-dd-item:hover,.staff-dd-item.active{background:#fffdf6;color:var(--gold2)}
-.staff-dd-empty{
-  padding:10px 14px;font-family:'Prompt',sans-serif;font-size:13px;font-weight:300;color:#999;
-}
-
-/* ── NOTES TOGGLE ── */
-.notes-toggle{
-  display:inline-flex;align-items:center;gap:6px;
-  background:none;border:1px dashed #d9c9a3;border-radius:8px;
-  padding:6px 14px;margin-bottom:6px;cursor:pointer;
-  font-family:'Prompt',sans-serif;font-size:13px;font-weight:300;color:var(--gold2);
-  transition:all .15s;
-}
-.notes-toggle:hover{background:#fffdf6;border-style:solid}
-.notes-toggle.open{color:#999;border-color:#e0e0e0}
 .fgrp{display:flex;flex-direction:column;gap:3px}
 .flbl{
   font-size:12px;color:#999;font-weight:300;
@@ -642,7 +614,6 @@ body{
 .liner-sub.show{display:block}
 
 @media(max-width:640px){
-  .fg6{grid-template-columns:1fr 1fr}
   .fg5{grid-template-columns:1fr 1fr}
   .fg4{grid-template-columns:1fr 1fr}
   .fg3{grid-template-columns:1fr 1fr}
@@ -1240,12 +1211,10 @@ input,textarea,select,button,option{
 <div class="page on" id="pg1">
   <div class="card">
     <div class="card-hd th-reg"><span class="card-hd-bold">Customer</span><span class="card-hd-italic"> Information</span></div>
-    <div class="fg fg6" style="margin-bottom:12px">
-      <div class="fgrp"><label class="flbl">โทรศัพท์</label><input class="finp" id="f_phone" type="tel" inputmode="numeric" placeholder="08x-xxx-xxxx" maxlength="12" autocomplete="off">
-      <div id="sfMsg" style="font-size:11px;font-family:'Prompt',sans-serif;font-weight:300;min-height:14px;margin-top:2px;padding-left:2px;color:#999;"></div>
-      <div id="phoneMsg" style="font-size:11px;font-family:'Prompt',sans-serif;font-weight:300;min-height:0;padding-left:2px;color:#cc4444;"></div></div>
+    <div class="fg fg5" style="margin-bottom:12px">
       <div class="fgrp"><label class="flbl">ชื่อ – นามสกุล</label><input class="finp" id="f_name" type="text" placeholder="ชื่อ นามสกุล..." autocorrect="off" autocomplete="off"></div>
-      <div class="fgrp"><label class="flbl">ชื่อเล่น</label><input class="finp" id="f_nickname" type="text" placeholder="ชื่อเล่น..." autocorrect="off" autocomplete="off"></div>
+      <div class="fgrp"><label class="flbl">โทรศัพท์</label><input class="finp" id="f_phone" type="tel" inputmode="numeric" placeholder="08x-xxx-xxxx" autocomplete="off">
+      <div id="sfMsg" style="font-size:11px;font-family:'Prompt',sans-serif;font-weight:300;min-height:14px;margin-top:2px;padding-left:2px;color:#999;"></div></div>
       <div class="fgrp"><label class="flbl">เพศ</label>
         <select class="fsel" id="f_gender"><option value="">เลือก</option><option>ชาย</option><option>หญิง</option></select>
       </div>
@@ -1276,11 +1245,7 @@ input,textarea,select,button,option{
     </div>
 
     <div class="fg fg2">
-      <div class="fgrp" style="position:relative"><label class="flbl">ชื่อพนักงานที่ให้บริการ</label>
-        <input class="finp" id="f_staff" type="text" placeholder="พิมพ์ชื่อพนักงาน 2 ตัวขึ้นไป..." autocorrect="off" autocomplete="off">
-        <div id="staffMsg" style="font-size:11px;font-family:'Prompt',sans-serif;font-weight:300;min-height:0;padding-left:2px;color:#999;"></div>
-        <div id="staffDropdown" class="staff-dd hidden"></div>
-      </div>
+      <div class="fgrp"><label class="flbl">ชื่อพนักงานที่ให้บริการ</label><input class="finp" id="f_staff" type="text" placeholder="ชื่อพนักงาน..." autocorrect="off" autocomplete="off"></div>
       <div class="fgrp"><label class="flbl">งานทีม</label><input class="finp" id="f_team" type="text" placeholder="ระบุงานทีม..." autocorrect="off" autocomplete="off"></div>
     </div>
   </div>
@@ -1288,7 +1253,7 @@ input,textarea,select,button,option{
 
   <!-- ── MEMBER &<!-- MEMBER CARD -->
   <div class="card">
-    <div class="card-hd th-reg" style="margin-bottom:14px"><span class="card-hd-bold">Member<span class="card-hd-italic">ship</span></span></div>
+    <div class="card-hd th-reg" style="margin-bottom:14px"><span class="card-hd-bold">Member</span><span class="card-hd-italic">ship</span></div>
 
     
 
@@ -1698,6 +1663,10 @@ input,textarea,select,button,option{
           <div class="fgrp"><label class="flbl">รังดุมเม็ดสุดท้าย</label><div class="cp-wrap" id="cp_lastRing"><input type="hidden" id="d_lastRing" value=""></div></div>
           <div class="fgrp"><label class="flbl">สีด้ายเย็บ</label><div class="cp-wrap" id="cp_threadColor"><input type="hidden" id="d_threadColor" value=""></div></div>
         </div>
+        <div class="fgrp" style="margin-top:8px">
+          <label class="flbl">รหัสกระดุม</label>
+          <input class="finp" id="d_suitBtnCode" type="text" placeholder="ระบุรหัสกระดุม..." autocomplete="off">
+        </div>
       </div>
 
       <!-- กระเป๋า -->
@@ -1836,9 +1805,9 @@ input,textarea,select,button,option{
           </div>
         </div>
       </div>
-      <div style="padding:12px 16px 16px;grid-column:1">
-        <button type="button" class="notes-toggle" onclick="toggleNotes('suit_notes',this)">+ หมายเหตุ</button>
-        <textarea id="suit_notes" class="hidden" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
+      <div style="padding:12px 16px 16px;grid-column:2">
+        <div class="fabric-lbl-th" style="margin-bottom:6px">หมายเหตุ</div>
+        <textarea id="suit_notes" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
       </div>
 
     </div><!-- /suit-layout -->
@@ -1912,7 +1881,14 @@ input,textarea,select,button,option{
 <line x1="3" y1="12" x2="8" y2="12"/>
 <line x1="16.2" y1="7.8" x2="13" y2="11"/>
 </svg></span>สีด้ายเย็บ<span class="suit-nav-check">✓</span></div>
-        <div class="suit-nav-item" onclick="switchTrPanel('fabric')"><span class="suit-nav-dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <div class="suit-nav-item" onclick="switchTrPanel('button')"><span class="suit-nav-dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="9"/>
+<circle cx="12" cy="12" r="4"/>
+<line x1="12" y1="3" x2="12" y2="8"/>
+<line x1="3" y1="12" x2="8" y2="12"/>
+<line x1="16.2" y1="7.8" x2="13" y2="11"/>
+</svg></span>กระดุม<span class="suit-nav-check">✓</span></div>
+      <div class="suit-nav-item" onclick="switchTrPanel('fabric')"><span class="suit-nav-dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
 <circle cx="12" cy="12" r="9"/>
 <circle cx="12" cy="12" r="4"/>
 <line x1="12" y1="3" x2="12" y2="8"/>
@@ -2076,6 +2052,13 @@ input,textarea,select,button,option{
         <div class="suit-panel-hd">สีด้ายเย็บ</div>
         <div class="cp-wrap" id="cp_trThread"><input type="hidden" id="d_trThread" value=""></div>
       </div>
+      <div class="suit-panel" id="tp-button">
+        <div class="suit-panel-hd">กระดุม</div>
+        <div class="fgrp">
+          <label class="flbl">รหัสกระดุม</label>
+          <input class="finp" id="d_trBtnCode" type="text" placeholder="ระบุรหัสกระดุม..." autocomplete="off">
+        </div>
+      </div>
       <div class="suit-panel" id="tp-fabric">
         <div class="suit-panel-hd">รหัสผ้า</div>
         <div class="fg" style="flex-direction:column;gap:14px;max-width:320px">
@@ -2089,9 +2072,9 @@ input,textarea,select,button,option{
           </div>
         </div>
       </div>
-      <div style="padding:12px 16px 16px;grid-column:1">
-        <button type="button" class="notes-toggle" onclick="toggleNotes('tr_notes',this)">+ หมายเหตุ</button>
-        <textarea id="tr_notes" class="hidden" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
+      <div style="padding:12px 16px 16px;grid-column:2">
+        <div class="fabric-lbl-th" style="margin-bottom:6px">หมายเหตุ</div>
+        <textarea id="tr_notes" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
       </div>
     </div><!-- /suit-layout trouser -->
   </div>
@@ -2142,7 +2125,14 @@ input,textarea,select,button,option{
 <line x1="3" y1="12" x2="8" y2="12"/>
 <line x1="16.2" y1="7.8" x2="13" y2="11"/>
 </svg></span>ผ้าชิ้นหลัง<span class="suit-nav-check">✓</span></div>
-        <div class="suit-nav-item" onclick="switchVestPanel('fabric')"><span class="suit-nav-dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <div class="suit-nav-item" onclick="switchVestPanel('button')"><span class="suit-nav-dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="9"/>
+<circle cx="12" cy="12" r="4"/>
+<line x1="12" y1="3" x2="12" y2="8"/>
+<line x1="3" y1="12" x2="8" y2="12"/>
+<line x1="16.2" y1="7.8" x2="13" y2="11"/>
+</svg></span>กระดุม<span class="suit-nav-check">✓</span></div>
+      <div class="suit-nav-item" onclick="switchVestPanel('fabric')"><span class="suit-nav-dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
 <circle cx="12" cy="12" r="9"/>
 <circle cx="12" cy="12" r="4"/>
 <line x1="12" y1="3" x2="12" y2="8"/>
@@ -2205,6 +2195,13 @@ input,textarea,select,button,option{
           <div class="fgrp"><label class="flbl">ผ้าตัวเสื้อ</label><input class="finp" id="d_vFabricBack" type="text" placeholder="ระบุผ้า..." autocomplete="off"></div>
         </div>
       </div>
+      <div class="suit-panel" id="vp-button">
+        <div class="suit-panel-hd">กระดุม</div>
+        <div class="fgrp">
+          <label class="flbl">รหัสกระดุม</label>
+          <input class="finp" id="d_vestBtnCode" type="text" placeholder="ระบุรหัสกระดุม..." autocomplete="off">
+        </div>
+      </div>
       <div class="suit-panel" id="vp-fabric">
         <div class="suit-panel-hd">รหัสผ้า</div>
         <div class="fg" style="flex-direction:column;gap:14px;max-width:320px">
@@ -2218,9 +2215,9 @@ input,textarea,select,button,option{
           </div>
         </div>
       </div>
-      <div style="padding:12px 16px 16px;grid-column:1">
-        <button type="button" class="notes-toggle" onclick="toggleNotes('vest_notes',this)">+ หมายเหตุ</button>
-        <textarea id="vest_notes" class="hidden" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
+      <div style="padding:12px 16px 16px;grid-column:2">
+        <div class="fabric-lbl-th" style="margin-bottom:6px">หมายเหตุ</div>
+        <textarea id="vest_notes" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
       </div>
     </div><!-- /suit-layout vest -->
   </div>
@@ -2278,7 +2275,14 @@ input,textarea,select,button,option{
 <line x1="3" y1="12" x2="8" y2="12"/>
 <line x1="16.2" y1="7.8" x2="13" y2="11"/>
 </svg></span>การปัก<span class="suit-nav-check">✓</span></div>
-        <div class="suit-nav-item" onclick="switchShPanel('fabric')"><span class="suit-nav-dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <div class="suit-nav-item" onclick="switchShPanel('button')"><span class="suit-nav-dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="12" cy="12" r="9"/>
+<circle cx="12" cy="12" r="4"/>
+<line x1="12" y1="3" x2="12" y2="8"/>
+<line x1="3" y1="12" x2="8" y2="12"/>
+<line x1="16.2" y1="7.8" x2="13" y2="11"/>
+</svg></span>กระดุม<span class="suit-nav-check">✓</span></div>
+      <div class="suit-nav-item" onclick="switchShPanel('fabric')"><span class="suit-nav-dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
 <circle cx="12" cy="12" r="9"/>
 <circle cx="12" cy="12" r="4"/>
 <line x1="12" y1="3" x2="12" y2="8"/>
@@ -2345,6 +2349,13 @@ input,textarea,select,button,option{
           <button class="pill" data-v="อกซ้าย" onclick="togglePill(this,'d_shEmbPos')">อกซ้าย</button>
         </div>
       </div>
+      <div class="suit-panel" id="shp-button">
+        <div class="suit-panel-hd">กระดุม</div>
+        <div class="fgrp">
+          <label class="flbl">รหัสกระดุม</label>
+          <input class="finp" id="d_shBtnCode" type="text" placeholder="ระบุรหัสกระดุม..." autocomplete="off">
+        </div>
+      </div>
       <div class="suit-panel" id="shp-fabric">
         <div class="suit-panel-hd">รหัสผ้า</div>
         <div class="fg" style="flex-direction:column;gap:14px;max-width:320px">
@@ -2358,9 +2369,9 @@ input,textarea,select,button,option{
           </div>
         </div>
       </div>
-      <div style="padding:12px 16px 16px;grid-column:1">
-        <button type="button" class="notes-toggle" onclick="toggleNotes('sh_notes',this)">+ หมายเหตุ</button>
-        <textarea id="sh_notes" class="hidden" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
+      <div style="padding:12px 16px 16px;grid-column:2">
+        <div class="fabric-lbl-th" style="margin-bottom:6px">หมายเหตุ</div>
+        <textarea id="sh_notes" rows="3" style="width:100%;border:1px solid #e0ddd5;border-radius:8px;padding:8px 10px;font-family:'Prompt',sans-serif;font-size:13px;resize:vertical;outline:none;" placeholder="หมายเหตุเพิ่มเติม…"></textarea>
       </div>
     </div><!-- /suit-layout shirt -->
   </div>
@@ -2488,29 +2499,12 @@ function refreshAllNavDone(){
 }
 
 // ── PICKUP DATE ──
-const PICKUP_MIN_DAYS = 5; // เลือกได้เฉพาะวันที่ล่วงหน้า 5 วันขึ้นไป
-function pickupMinStr(){
-  const d=new Date(); d.setDate(d.getDate()+PICKUP_MIN_DAYS);
-  const z=v=>String(v).padStart(2,'0');
-  return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T00:00`;
-}
 function setPickup(ft){
   const d=new Date(); d.setDate(d.getDate()+(ft?5:14));
   const z=v=>String(v).padStart(2,'0');
-  const inp=document.getElementById('f_pickupDate');
-  inp.min=pickupMinStr();
-  inp.value=`${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T10:00`;
+  document.getElementById('f_pickupDate').value=`${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T10:00`;
 }
 setPickup(false);
-document.getElementById('f_pickupDate').addEventListener('change',function(){
-  if(!this.value) return;
-  const minD=new Date(pickupMinStr());
-  if(new Date(this.value) < minD){
-    alert(`วันที่นัดรับต้องเป็นวันที่ล่วงหน้าอย่างน้อย ${PICKUP_MIN_DAYS} วัน`);
-    const z=v=>String(v).padStart(2,'0');
-    this.value=`${minD.getFullYear()}-${z(minD.getMonth()+1)}-${z(minD.getDate())}T10:00`;
-  }
-});
 
 // ── FAST TRACK ──
 function toggleFT(){
@@ -3012,27 +3006,7 @@ document.getElementById('audioFileInput').onchange=async function(){
 
 document.getElementById('f_phone').addEventListener('input',function(){
   this.value=this.value.replace(/[^0-9\-+]/g,'');
-  validatePhone10(false);
 });
-document.getElementById('f_phone').addEventListener('blur',()=>validatePhone10(true));
-
-// ── PHONE 10-DIGIT VALIDATION ──
-function validatePhone10(strict){
-  const el=document.getElementById('f_phone');
-  const msg=document.getElementById('phoneMsg');
-  const digits=normalizePhone(el.value);
-  let ok=true, text='';
-  if(digits.length===0){
-    text=''; ok=!strict;
-  }else if(digits.length<10){
-    text=`เบอร์โทรไม่ครบ 10 หลัก (กรอกแล้ว ${digits.length} หลัก)`; ok=false;
-  }else if(digits.length>10){
-    text='เบอร์โทรเกิน 10 หลัก'; ok=false;
-  }
-  if(msg) msg.textContent=text;
-  el.style.borderColor = text ? '#cc4444' : '';
-  return ok;
-}
 
 function updSelColor(sel){
   sel.style.color = sel.value === '' ? '#999' : '#333';
@@ -3050,16 +3024,6 @@ function clearMeasurements(){
   setTimeout(()=>{document.getElementById('vstatus').textContent='';},2500);
 }
 
-// ── NOTES TOGGLE ──
-function toggleNotes(id, btn){
-  const ta=document.getElementById(id);
-  if(!ta) return;
-  const showing=ta.classList.toggle('hidden');
-  btn.classList.toggle('open', !showing);
-  btn.textContent = showing ? '+ หมายเหตุ' : '− ซ่อนหมายเหตุ';
-  if(!showing) ta.focus();
-}
-
 // ── SUMMARY RECEIPT ──
 function buildReceipt(){
   const v=id=>(document.getElementById(id)||{}).value||'—';
@@ -3068,7 +3032,6 @@ function buildReceipt(){
 
   const custRows=[
     ['ชื่อ', v('f_name')],
-    ['ชื่อเล่น', v('f_nickname')],
     ['เพศ', v('f_gender')],
     ['โทรศัพท์', v('f_phone')],
     ['ส่วนสูง / น้ำหนัก', `${v('f_height')} cm / ${v('f_weight')} kg`],
@@ -3099,8 +3062,12 @@ function buildReceipt(){
   const fcMain = v(`${S.gtype==='trouser'?'tr':S.gtype==='skirt'?'sk':S.gtype==='vest'?'vest':S.gtype==='shirt'?'sh':'suit'}_fabric_main`);
   const fcSec  = v(`${S.gtype==='trouser'?'tr':S.gtype==='skirt'?'sk':S.gtype==='vest'?'vest':S.gtype==='shirt'?'sh':'suit'}_fabric_sec`);
 
-  const notesPrefix = S.gtype==='trouser'?'tr' : S.gtype==='vest'?'vest' : S.gtype==='shirt'?'sh' : 'suit';
-  const notes = ((document.getElementById(`${notesPrefix}_notes`)||{}).value||'').trim();
+  const notes = v('f_notes');
+const btnCode = (() => {
+  const id = S.gtype==='suit'?'d_suitBtnCode':S.gtype==='trouser'?'d_trBtnCode':S.gtype==='vest'?'d_vestBtnCode':S.gtype==='shirt'?'d_shBtnCode':'';
+  return id ? (document.getElementById(id)||{}).value||'—' : '—';
+})();
+
 
   document.getElementById('receiptWrap').innerHTML=`
     <div class="receipt-header">
@@ -3131,7 +3098,14 @@ function buildReceipt(){
           <div class="receipt-row"><span class="receipt-row-key">ผ้ารอง</span><span class="receipt-row-val">${fcSec}</span></div>
         </div>
       </div>`:''}
-      ${notes?`
+      ${btnCode&&btnCode!=='—'?`
+<div class="receipt-section">
+<div class="receipt-section-ttl">รหัสกระดุม</div>
+<div class="receipt-rows">
+<div class="receipt-row"><span class="receipt-row-key">รหัสกระดุม</span><span class="receipt-row-val">${btnCode}</span></div>
+</div>
+</div>`:''}
+${notes&&notes!=='—'?`
       <div class="receipt-section">
         <div class="receipt-section-ttl">หมายเหตุ</div>
         <p style="font-family:'Prompt',sans-serif;font-size:14px;font-weight:300;color:#555;line-height:1.8">${notes}</p>
@@ -3143,10 +3117,7 @@ function buildReceipt(){
 
 // ── NAVIGATION ──
 function goNext(){
-  if(S.page===1){
-    const digits=normalizePhone((document.getElementById('f_phone')||{}).value||'');
-    if(digits.length!==10){alert('กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก');validatePhone10(true);return;}
-    if(!S.gtype){alert('กรุณาเลือกประเภทการสั่งตัด');return;} goTo(2);}
+  if(S.page===1){if(!S.gtype){alert('กรุณาเลือกประเภทการสั่งตัด');return;} goTo(2);}
   else if(S.page===2){buildReceipt();goTo(3);}
 }
 function goBack(){ if(S.page>1) goTo(S.page-1); }
@@ -3206,7 +3177,6 @@ function doSubmit(){
 
   const payload = {
     name:          val('f_name'),
-    nickname:      val('f_nickname'),
     gender:        val('f_gender'),
     phone:         val('f_phone'),
     height:        val('f_height'),
@@ -3215,8 +3185,6 @@ function doSubmit(){
     branchPickup:  val('f_branchPickup'),
     pickupDate:    val('f_pickupDate').replace('T',' '),
     staff:         val('f_staff'),
-    'พนักงานขาย':  val('f_staff'), // create-order worker ใช้ query หา Suitcube_Employee_Branch__c
-    staffSfId:     (typeof staffSelectedId!=='undefined' ? staffSelectedId : ''),
     team:          val('f_team'),
     body:          val('f_body'),
     type:          GLBL[S.gtype] || S.gtype,
@@ -3286,76 +3254,6 @@ async function sfQuery(soql) {
   if (!resp.ok) throw new Error((data[0] || {}).message || 'Query failed');
   return data;
 }
-
-// ── STAFF AUTOCOMPLETE (Salesforce via Worker) ──
-// GET https://suitcube-sf-lookup.ba-bd5.workers.dev/lookup-employees?name=xxx
-// Response: { results: [{ id: "003xx...", name: "สมชาย ใจดี" }] }
-const STAFF_LOOKUP_URL = 'https://suitcube-sf-lookup.ba-bd5.workers.dev/lookup-employees';
-let staffTimer = null;
-let staffAbort = null;
-let staffSelectedId = '';
-
-function staffDD(){ return document.getElementById('staffDropdown'); }
-function hideStaffDD(){ const d=staffDD(); if(d){ d.classList.add('hidden'); d.innerHTML=''; } }
-
-async function fetchStaff(q){
-  if(staffAbort) staffAbort.abort();
-  staffAbort = new AbortController();
-  const msg=document.getElementById('staffMsg');
-  try{
-    if(msg) msg.textContent='🔍 กำลังค้นหา...';
-    const resp = await fetch(`${STAFF_LOOKUP_URL}?name=${encodeURIComponent(q)}`, {signal: staffAbort.signal});
-    if(!resp.ok) throw new Error('lookup failed');
-    const data = await resp.json();
-    if(msg) msg.textContent='';
-    renderStaffDD(data.results || []);
-  }catch(err){
-    if(err.name==='AbortError') return;
-    if(msg){ msg.textContent='เชื่อมต่อ Salesforce ไม่ได้'; msg.style.color='#cc4444'; }
-    hideStaffDD();
-  }
-}
-
-function renderStaffDD(results){
-  const d=staffDD(); if(!d) return;
-  if(!results.length){
-    d.innerHTML='<div class="staff-dd-empty">ไม่พบพนักงาน</div>';
-    d.classList.remove('hidden');
-    return;
-  }
-  d.innerHTML = results.map(r=>
-    `<div class="staff-dd-item" data-id="${r.id}" data-name="${(r.name||'').replace(/"/g,'&quot;')}">${r.name}</div>`
-  ).join('');
-  d.classList.remove('hidden');
-  d.querySelectorAll('.staff-dd-item').forEach(item=>{
-    item.addEventListener('click',()=>{
-      const inp=document.getElementById('f_staff');
-      inp.value=item.dataset.name;
-      staffSelectedId=item.dataset.id;
-      hideStaffDD();
-      const msg=document.getElementById('staffMsg');
-      if(msg){ msg.textContent='✓ เลือกจาก Salesforce แล้ว'; msg.style.color='#4CAF50'; }
-    });
-  });
-}
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  const fStaff=document.getElementById('f_staff');
-  if(!fStaff) return;
-  fStaff.addEventListener('input', function(){
-    staffSelectedId='';
-    const msg=document.getElementById('staffMsg');
-    if(msg){ msg.textContent=''; msg.style.color='#999'; }
-    clearTimeout(staffTimer);
-    const q=this.value.trim();
-    if(q.length < 2){ hideStaffDD(); return; }
-    staffTimer=setTimeout(()=> fetchStaff(q), 300); // debounce 300ms
-  });
-  fStaff.addEventListener('keydown', e=>{ if(e.key==='Escape') hideStaffDD(); });
-  document.addEventListener('click', e=>{
-    if(!e.target.closest('#f_staff') && !e.target.closest('#staffDropdown')) hideStaffDD();
-  });
-});
 
 // ── Phone helpers ──
 function normalizePhone(p) { return (p || '').replace(/[^0-9]/g, ''); }
@@ -3922,7 +3820,7 @@ function applyVestPreset(pid, cardEl){
 }
 
 function switchVestPanel(id){
-  const panels=['collar','pocket','back','fabric'];
+  const panels=['collar','pocket','back','button','fabric'];
   document.querySelectorAll('#vest-nav .suit-nav-item').forEach((el,i)=>{
     el.classList.toggle('active', panels[i]===id);
   });
@@ -3933,7 +3831,7 @@ function switchVestPanel(id){
 }
 
 function switchShPanel(id){
-  const panels=['type','fit','collar','pocket','cuff','band','emb','fabric'];
+  const panels=['type','fit','collar','pocket','cuff','band','emb','button','fabric'];
   document.querySelectorAll('#sh-nav .suit-nav-item').forEach((el,i)=>{
     el.classList.toggle('active', panels[i]===id);
   });
@@ -3944,7 +3842,7 @@ function switchShPanel(id){
 }
 
 function switchTrPanel(id){
-  const panels=['style','pleat','belt','waist','hem','backpocket','cuff','liner','thread','fabric'];
+  const panels=['style','pleat','belt','waist','hem','backpocket','cuff','liner','thread','button','fabric'];
   document.querySelectorAll('#tr-nav .suit-nav-item').forEach((el,i)=>{
     el.classList.toggle('active', panels[i]===id);
   });
@@ -4150,7 +4048,7 @@ async function fetchFabricDB() {
     } catch(e) { console.warn('FabricDB via Apps Script failed', e); }
   }
   try {
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQGkCtn9Gtfr-6prn82J7nREAK6D8UU1pTY9lN-8CqbEcc68mEnCLYg5hQE43QZWIMLzF44K_WNcK0H/pub?gid=0&single=true&output=csv';
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/https://docs.google.com/spreadsheets/d/e/2PACX-1vQGkCtn9Gtfr-6prn82J7nREAK6D8UU1pTY9lN-8CqbEcc68mEnCLYg5hQE43QZWIMLzF44K_WNcK0H/pub?gid=0&single=true&output=csv';
     const r = await fetch(CSV_URL);
     const text = await r.text();
     const lines = text.trim().split('\n').slice(1);
@@ -4205,10 +4103,4 @@ function initFabricAC(inputId) {
 
   inp.addEventListener('input', showDrop);
   inp.addEventListener('focus', showDrop);
-  inp.addEventListener('blur', () => setTimeout(() => { drop.style.display = 'none'; }, 200));
-  inp.setAttribute('autocomplete','off');
-}
-
-</script>
-</body>
-</html>
+  inp.addEventListener('blur', () => s
