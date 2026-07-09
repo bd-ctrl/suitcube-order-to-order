@@ -1209,29 +1209,25 @@ input,textarea,select,button,option{
 .fab-ac-status{font-size:11px;flex-shrink:0;}
 .fab-ac-empty{padding:10px 12px;font-size:12px;color:#aaa;font-family:'Prompt',sans-serif;}
 .fab-ac-loading{padding:10px 12px;font-size:12px;color:#bbb;font-family:'Prompt',sans-serif;font-style:italic;}
+
+/* preset labels hidden */
+.preset-card-lbl{display:none!important}
+/* draft */
+.draft-save-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--gold);color:#1a1a1a;border:none;border-radius:8px;font-size:13px;font-family:'Prompt',sans-serif;font-weight:500;cursor:pointer;}
+.draft-view-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:transparent;color:var(--gold);border:1.5px solid var(--gold);border-radius:8px;font-size:12px;font-family:'Prompt',sans-serif;cursor:pointer;}
+.draft-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:6px;margin-bottom:4px;cursor:pointer;background:#fffdf7;border:1px solid #f0ebe0;}
+.draft-item:hover{border-color:var(--gold);}
+.draft-item-name{flex:1;font-size:13px;font-family:'Prompt',sans-serif;color:#333;}
+.draft-item-ts{font-size:11px;color:#aaa;font-family:'Prompt',sans-serif;}
+.draft-del-btn{border:none;background:transparent;color:#ccc;font-size:18px;cursor:pointer;padding:0 4px;line-height:1;}
+.draft-del-btn:hover{color:#e44;}
 </style>
 </head>
 <body>
 
 <div class="app">
 
-<div id="hdr-bar" style="
-  position:sticky;top:0;z-index:100;
-  background:linear-gradient(90deg,#1a1a1a 0%,#2a2520 60%,#1e1a14 100%);
-  padding:7px 22px;
-  display:flex;align-items:center;justify-content:space-between;
-  box-shadow:0 2px 12px rgba(0,0,0,.18);
-">
-  <span style="
-    font-family:'Prompt',sans-serif;font-size:10.5px;font-weight:200;
-    color:rgba(217,174,93,.5);letter-spacing:.18em;text-transform:uppercase;
-  ">SUITCUBE</span>
-  <span id="hdr-datetime" style="
-    font-family:'Prompt',sans-serif;
-    font-size:11px;font-weight:300;
-    color:rgba(217,174,93,.75);letter-spacing:.04em;
-  "></span>
-</div>
+
 
 <!-- STEPS -->
 
@@ -1400,7 +1396,7 @@ input,textarea,select,button,option{
 
 
   <div class="card det-wrap" id="det-suit">
-    <div class="card-hd th-reg" style="display:flex;align-items:center;gap:10px"><img src="data:image/svg+xml;base64,PHN2ZyPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMyMjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPCEtLSBNYWluIHJvbGwgYm9keSAtLT4KICA8IS0tIFRvcCBmYWNlIG9mIGN5bGluZGVyIChlbGxpcHNlKSAtLT4KICA8ZWxsaXBzZSBjeD0iNTIiIGN5PSIzMCIgcng9IjQwIiByeT0iMTQiIHN0cm9rZS13aWR0aD0iMiIvPgogIDwhLS0gQ3lsaW5kZXIgc2lkZXMgLS0+CiAgPGxpbmUgeDE9IjEyIiB5MT0iMzAiIHgyPSIxMiIgeTI9IjU4IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8bGluZSB4MT0iOTIiIHkxPSIzMCIgeDI9IjkyIiB5Mj0iNTgiIHN0cm9rZS13aWR0aD0iMiIvPgogIDwhLS0gQm90dG9tIGZhY2UgLS0+CiAgPGVsbGlwc2UgY3g9IjUyIiBjeT0iNTgiIHJ4PSI0MCIgcnk9IjE0IiBzdHJva2Utd2lkdGg9IjIiLz4KCiAgPCEtLSBJbm5lciBob2xlIC0gdG9wIHJpbmcgLS0+CiAgPGVsbGlwc2UgY3g9IjUyIiBjeT0iMzAiIHJ4PSIxMyIgcnk9IjQuNSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz4KICA8IS0tIElubmVyIGhvbGUgc2lkZXMgLS0+CiAgPGxpbmUgeDE9IjM5IiB5MT0iMzAiIHgyPSIzOSIgeTI9IjU2IiBzdHJva2Utd2lkdGg9IjEuNCIvPgogIDxsaW5lIHgxPSI2NSIgeTE9IjMwIiB4Mj0iNjUiIHkyPSI1NiIgc3Ryb2tlLXdpZHRoPSIxLjQiLz4KICA8IS0tIElubmVyIGhvbGUgYm90dG9tIHJpbmcgLS0+CiAgPGVsbGlwc2UgY3g9IjUyIiBjeT0iNTYiIHJ4PSIxMyIgcnk9IjQuNSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz4KCiAgPCEtLSBTdWJ0bGUgY3Jvc3MtaGF0Y2ggc2hhZGluZyBvbiBib2R5IGZvciAzRCBkZXB0aCAtLT4KICA8bGluZSB4MT0iMjIiIHkxPSIzMiIgeDI9IjIyIiB5Mj0iNTYiIHN0cm9rZS13aWR0aD0iMC43IiBvcGFjaXR5PSIwLjM1Ii8+CiAgPGxpbmUgeDE9IjMyIiB5MT0iMzMiIHgyPSIzMiIgeTI9IjU3IiBzdHJva2Utd2lkdGg9IjAuNyIgb3BhY2l0eT0iMC4zNSIvPgogIDxsaW5lIHgxPSI3MiIgeTE9IjMzIiB4Mj0iNzIiIHkyPSI1NyIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuMzUiLz4KICA8bGluZSB4MT0iODIiIHkxPSIzMiIgeDI9IjgyIiB5Mj0iNTYiIHN0cm9rZS13aWR0aD0iMC43IiBvcGFjaXR5PSIwLjM1Ii8+CgogIDwhLS0gVGFwZSB1bnJvbGxpbmcgdG8gdGhlIHJpZ2h0IC0tPgogIDwhLS0gVGFwZSBjb25uZWN0cyBmcm9tIGJvdHRvbS1yaWdodCBvZiByb2xsIC0tPgogIDwhLS0gVG9wIGVkZ2Ugb2YgdGFwZSAtLT4KICA8cGF0aCBkPSJNOTIgNDYgQzEwMCA0NSAxMDggNDYgMTE4IDQ0IEMxMjggNDIgMTM4IDQzIDE1MCA0MCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSBCb3R0b20gZWRnZSBvZiB0YXBlIC0tPgogIDxwYXRoIGQ9Ik05MiA1OCBDMTAwIDU4IDEwOCA1OSAxMTggNTcgQzEyOCA1NSAxMzggNTYgMTUwIDUzIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8IS0tIFJpZ2h0IGVuZCBvZiB0YXBlIC0tPgogIDxsaW5lIHgxPSIxNTAiIHkxPSI0MCIgeDI9IjE1MCIgeTI9IjUzIiBzdHJva2Utd2lkdGg9IjIiLz4KCiAgPCEtLSBUYXBlIGZpbGwgaGludCAobGlnaHQgZGlhZ29uYWwgbGluZXMgaW5zaWRlIHRhcGUpIC0tPgogIDxsaW5lIHgxPSI5NSIgeTE9IjQ3IiB4Mj0iOTUiIHkyPSI1NiIgc3Ryb2tlLXdpZHRoPSIwLjYiIG9wYWNpdHk9IjAuMiIvPgoKICA8IS0tIE1ham9yIHRpY2sgbWFya3MgKGV2ZXJ5IDVtbSkgLS0+CiAgPGxpbmUgeDE9IjEwMCIgeTE9IjQ2LjUiIHgyPSIxMDAiIHkyPSI1MS41IiBzdHJva2Utd2lkdGg9IjEuNCIvPgogIDxsaW5lIHgxPSIxMTAiIHkxPSI0NS41IiB4Mj0iMTEwIiB5Mj0iNTAuNSIgc3Ryb2tlLXdpZHRoPSIxLjQiLz4KICA8bGluZSB4MT0iMTIwIiB5MT0iNDUiIHgyPSIxMjAiIHkyPSI1MCIgc3Ryb2tlLXdpZHRoPSIxLjQiLz4KICA8bGluZSB4MT0iMTMwIiB5MT0iNDQuNSIgeDI9IjEzMCIgeTI9IjQ5LjUiIHN0cm9rZS13aWR0aD0iMS40Ii8+CiAgPGxpbmUgeDE9IjE0MCIgeTE9IjQ0IiB4Mj0iMTQwIiB5Mj0iNDkiIHN0cm9rZS13aWR0aD0iMS40Ii8+CgogIDwhLS0gTWlub3IgdGljayBtYXJrcyAtLT4KICA8bGluZSB4MT0iMTA1IiB5MT0iNDciIHgyPSIxMDUiIHkyPSI1MC41IiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTE1IiB5MT0iNDYuNSIgeDI9IjExNSIgeTI9IjUwIiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTI1IiB5MT0iNDYiIHgyPSIxMjUiIHkyPSI0OS41IiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTM1IiB5MT0iNDUuNSIgeDI9IjEzNSIgeTI9IjQ5IiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTQ1IiB5MT0iNDUiIHgyPSIxNDUiIHkyPSI0OC41IiBzdHJva2Utd2lkdGg9IjEiLz4KCiAgPCEtLSBTbWFsbGVzdCB0aWNrcyAtLT4KICA8bGluZSB4MT0iMTAyIiB5MT0iNDcuNSIgeDI9IjEwMiIgeTI9IjUwIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIxMDciIHkxPSI0NyIgeDI9IjEwNyIgeTI9IjQ5LjUiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjExMiIgeTE9IjQ2LjUiIHgyPSIxMTIiIHkyPSI0OSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8bGluZSB4MT0iMTE3IiB5MT0iNDYuNSIgeDI9IjExNyIgeTI9IjQ5IiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIxMjIiIHkxPSI0NiIgeDI9IjEyMiIgeTI9IjQ4LjUiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjEyNyIgeTE9IjQ2IiB4Mj0iMTI3IiB5Mj0iNDguNSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8bGluZSB4MT0iMTMyIiB5MT0iNDUuNSIgeDI9IjEzMiIgeTI9IjQ4IiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIxMzciIHkxPSI0NS41IiB4Mj0iMTM3IiB5Mj0iNDgiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjE0MiIgeTE9IjQ1IiB4Mj0iMTQyIiB5Mj0iNDcuNSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8bGluZSB4MT0iMTQ3IiB5MT0iNDUiIHgyPSIxNDciIHkyPSI0Ny41IiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8L3N2Zz4=" style="width:48px;height:30px;object-fit:contain;opacity:.85" alt=""><span class="card-hd-bold">Design</span><span class="card-hd-italic"> Details</span><span class="card-hd-type">Suit</span></div>
+    <div class="card-hd th-reg" style="display:flex;align-items:center;gap:10px"><img src="data:image/svg+xml;base64,PHN2ZyPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMTAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMyMjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPCEtLSBNYWluIHJvbGwgYm9keSAtLT4KICA8IS0tIFRvcCBmYWNlIG9mIGN5bGluZGVyIChlbGxpcHNlKSAtLT4KICA8ZWxsaXBzZSBjeD0iNTIiIGN5PSIzMCIgcng9IjQwIiByeT0iMTQiIHN0cm9rZS13aWR0aD0iMiIvPgogIDwhLS0gQ3lsaW5kZXIgc2lkZXMgLS0+CiAgPGxpbmUgeDE9IjEyIiB5MT0iMzAiIHgyPSIxMiIgeTI9IjU4IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8bGluZSB4MT0iOTIiIHkxPSIzMCIgeDI9IjkyIiB5Mj0iNTgiIHN0cm9rZS13aWR0aD0iMiIvPgogIDwhLS0gQm90dG9tIGZhY2UgLS0+CiAgPGVsbGlwc2UgY3g9IjUyIiBjeT0iNTgiIHJ4PSI0MCIgcnk9IjE0IiBzdHJva2Utd2lkdGg9IjIiLz4KCiAgPCEtLSBJbm5lciBob2xlIC0gdG9wIHJpbmcgLS0+CiAgPGVsbGlwc2UgY3g9IjUyIiBjeT0iMzAiIHJ4PSIxMyIgcnk9IjQuNSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz4KICA8IS0tIElubmVyIGhvbGUgc2lkZXMgLS0+CiAgPGxpbmUgeDE9IjM5IiB5MT0iMzAiIHgyPSIzOSIgeTI9IjU2IiBzdHJva2Utd2lkdGg9IjEuNCIvPgogIDxsaW5lIHgxPSI2NSIgeTE9IjMwIiB4Mj0iNjUiIHkyPSI1NiIgc3Ryb2tlLXdpZHRoPSIxLjQiLz4KICA8IS0tIElubmVyIGhvbGUgYm90dG9tIHJpbmcgLS0+CiAgPGVsbGlwc2UgY3g9IjUyIiBjeT0iNTYiIHJ4PSIxMyIgcnk9IjQuNSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz4KCiAgPCEtLSBTdWJ0bGUgY3Jvc3MtaGF0Y2ggc2hhZGluZyBvbiBib2R5IGZvciAzRCBkZXB0aCAtLT4KICA8bGluZSB4MT0iMjIiIHkxPSIzMiIgeDI9IjIyIiB5Mj0iNTYiIHN0cm9rZS13aWR0aD0iMC43IiBvcGFjaXR5PSIwLjM1Ii8+CiAgPGxpbmUgeDE9IjMyIiB5MT0iMzMiIHgyPSIzMiIgeTI9IjU3IiBzdHJva2Utd2lkdGg9IjAuNyIgb3BhY2l0eT0iMC4zNSIvPgogIDxsaW5lIHgxPSI3MiIgeTE9IjMzIiB4Mj0iNzIiIHkyPSI1NyIgc3Ryb2tlLXdpZHRoPSIwLjciIG9wYWNpdHk9IjAuMzUiLz4KICA8bGluZSB4MT0iODIiIHkxPSIzMiIgeDI9IjgyIiB5Mj0iNTYiIHN0cm9rZS13aWR0aD0iMC43IiBvcGFjaXR5PSIwLjM1Ii8+CgogIDwhLS0gVGFwZSB1bnJvbGxpbmcgdG8gdGhlIHJpZ2h0IC0tPgogIDwhLS0gVGFwZSBjb25uZWN0cyBmcm9tIGJvdHRvbS1yaWdodCBvZiByb2xsIC0tPgogIDwhLS0gVG9wIGVkZ2Ugb2YgdGFwZSAtLT4KICA8cGF0aCBkPSJNOTIgNDYgQzEwMCA0NSAxMDggNDYgMTE4IDQ0IEMxMjggNDIgMTM4IDQzIDE1MCA0MCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSBCb3R0b20gZWRnZSBvZiB0YXBlIC0tPgogIDxwYXRoIGQ9Ik05MiA1OCBDMTAwIDU4IDEwOCA1OSAxMTggNTcgQzEyOCA1NSAxMzggNTYgMTUwIDUzIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8IS0tIFJpZ2h0IGVuZCBvZiB0YXBlIC0tPgogIDxsaW5lIHgxPSIxNTAiIHkxPSI0MCIgeDI9IjE1MCIgeTI9IjUzIiBzdHJva2Utd2lkdGg9IjIiLz4KCiAgPCEtLSBUYXBlIGZpbGwgaGludCAobGlnaHQgZGlhZ29uYWwgbGluZXMgaW5zaWRlIHRhcGUpIC0tPgogIDxsaW5lIHgxPSI5NSIgeTE9IjQ3IiB4Mj0iOTUiIHkyPSI1NiIgc3Ryb2tlLXdpZHRoPSIwLjYiIG9wYWNpdHk9IjAuMiIvPgoKICA8IS0tIE1ham9yIHRpY2sgbWFya3MgKGV2ZXJ5IDVtbSkgLS0+CiAgPGxpbmUgeDE9IjEwMCIgeTE9IjQ2LjUiIHgyPSIxMDAiIHkyPSI1MS41IiBzdHJva2Utd2lkdGg9IjEuNCIvPgogIDxsaW5lIHgxPSIxMTAiIHkxPSI0NS41IiB4Mj0iMTEwIiB5Mj0iNTAuNSIgc3Ryb2tlLXdpZHRoPSIxLjQiLz4KICA8bGluZSB4MT0iMTIwIiB5MT0iNDUiIHgyPSIxMjAiIHkyPSI1MCIgc3Ryb2tlLXdpZHRoPSIxLjQiLz4KICA8bGluZSB4MT0iMTMwIiB5MT0iNDQuNSIgeDI9IjEzMCIgeTI9IjQ5LjUiIHN0cm9rZS13aWR0aD0iMS40Ii8+CiAgPGxpbmUgeDE9IjE0MCIgeTE9IjQ0IiB4Mj0iMTQwIiB5Mj0iNDkiIHN0cm9rZS13aWR0aD0iMS40Ii8+CgogIDwhLS0gTWlub3IgdGljayBtYXJrcyAtLT4KICA8bGluZSB4MT0iMTA1IiB5MT0iNDciIHgyPSIxMDUiIHkyPSI1MC41IiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTE1IiB5MT0iNDYuNSIgeDI9IjExNSIgeTI9IjUwIiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTI1IiB5MT0iNDYiIHgyPSIxMjUiIHkyPSI0OS41IiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTM1IiB5MT0iNDUuNSIgeDI9IjEzNSIgeTI9IjQ5IiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTQ1IiB5MT0iNDUiIHgyPSIxNDUiIHkyPSI0OC41IiBzdHJva2Utd2lkdGg9IjEiLz4KCiAgPCEtLSBTbWFsbGVzdCB0aWNrcyAtLT4KICA8bGluZSB4MT0iMTAyIiB5MT0iNDcuNSIgeDI9IjEwMiIgeTI9IjUwIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIxMDciIHkxPSI0NyIgeDI9IjEwNyIgeTI9IjQ5LjUiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjExMiIgeTE9IjQ2LjUiIHgyPSIxMTIiIHkyPSI0OSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8bGluZSB4MT0iMTE3IiB5MT0iNDYuNSIgeDI9IjExNyIgeTI9IjQ5IiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIxMjIiIHkxPSI0NiIgeDI9IjEyMiIgeTI9IjQ4LjUiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjEyNyIgeTE9IjQ2IiB4Mj0iMTI3IiB5Mj0iNDguNSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8bGluZSB4MT0iMTMyIiB5MT0iNDUuNSIgeDI9IjEzMiIgeTI9IjQ4IiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIxMzciIHkxPSI0NS41IiB4Mj0iMTM3IiB5Mj0iNDgiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjE0MiIgeTE9IjQ1IiB4Mj0iMTQyIiB5Mj0iNDcuNSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8bGluZSB4MT0iMTQ3IiB5MT0iNDUiIHgyPSIxNDciIHkyPSI0Ny41IiBzdHJva2Utd2lkdGg9IjAuOCIvPgo8L3N2Zz4=" style="width:48px;height:30px;object-fit:contain;opacity:.85" alt=""><span class="card-hd-bold">Design</span><span class="card-hd-italic"> Details</span><span class="card-hd-type">Jacket</span></div>
     <!-- PRESETS -->
     <div class="preset-section">
       <div class="preset-section-hd">เลือก Preset</div>
@@ -1436,6 +1432,9 @@ input,textarea,select,button,option{
           <div class="preset-card-lbl">Rose Pink Jacket</div>
         </div>
 
+      </div>
+      <div id="presetPreviewSuit" style="display:none;padding:10px 0 0;text-align:center;">
+        <img id="presetPreviewSuitImg" style="max-height:260px;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.15);object-fit:cover;object-position:top;">
       </div>
     </div>
 
@@ -1815,11 +1814,11 @@ input,textarea,select,button,option{
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <div class="fgrp">
               <label class="flbl">สีปัก</label>
-              <input class="finp" id="d_embColor" type="text" placeholder="ระบุสี..." autocomplete="off">
+              <input class="finp" id="d_embColor" type="text" placeholder="ระบุสี..." autocomplete="off" oninput="refreshAllNavDone()">
             </div>
             <div class="fgrp">
               <label class="flbl">ข้อความปัก</label>
-              <input class="finp" id="d_embText" type="text" placeholder="ข้อความ..." autocomplete="off">
+              <input class="finp" id="d_embText" type="text" placeholder="ข้อความ..." autocomplete="off" oninput="refreshAllNavDone()">
             </div>
           </div>
 
@@ -2129,6 +2128,9 @@ input,textarea,select,button,option{
         </div>
 
       </div>
+      <div id="presetPreviewVest" style="display:none;padding:10px 0 0;text-align:center;">
+        <img id="presetPreviewVestImg" style="max-height:260px;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.15);object-fit:cover;object-position:top;">
+      </div>
     </div>
 
     <div class="suit-layout">
@@ -2393,6 +2395,19 @@ input,textarea,select,button,option{
     </div><!-- /suit-layout shirt -->
   </div>
 
+<!-- DRAFT SAVE -->
+<div class="card" style="padding:14px 16px;margin-top:0">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <span style="font-size:11px;color:#aaa;font-family:'Prompt',sans-serif;letter-spacing:.04em">DRAFT</span>
+    <div style="display:flex;gap:8px">
+      <button class="draft-save-btn" onclick="saveDraft()">บันทึกฉบับร่าง</button>
+      <button class="draft-view-btn" onclick="toggleDraftPanel()">ดูฉบับร่าง (<span id="draftCount">0</span>)</button>
+    </div>
+  </div>
+  <div id="draftPanel" style="display:none;margin-top:12px;max-height:260px;overflow-y:auto"></div>
+</div>
+
+
 
 </div>
 
@@ -2480,6 +2495,16 @@ function buildGrids(){
 // ── NAV DONE CHECKER ──
 function isPanelFilled(panelEl){
   if(!panelEl) return false;
+  // Special: emb panel needs all 3 sub-fields if ปัก selected
+  if(panelEl.id==='sp-emb'){
+    const tog=panelEl.querySelector('#d_embToggle .pill.sel');
+    if(!tog) return false;
+    if(tog.dataset.v==='ไม่ปัก') return true;
+    const hasStyle=!!panelEl.querySelector('.emb-style-item.sel');
+    const hasColor=(panelEl.querySelector('#d_embColor')?.value||'').trim()!=='';
+    const hasText=(panelEl.querySelector('#d_embText')?.value||'').trim()!=='';
+    return hasStyle&&hasColor&&hasText;
+  }
   const hasPill = panelEl.querySelector('.pill.sel');
   if(hasPill) return true;
   const inputs = panelEl.querySelectorAll('input[type="text"],input[type="number"],textarea');
@@ -2506,13 +2531,13 @@ function refreshAllNavDone(){
   }
   const trNav = document.getElementById('tr-nav');
   if(trNav) refreshNavDone(trNav,
-    ['style','pleat','belt','waist','hem','backpocket','cuff','liner','thread','fabric'], 'tp-');
+    ['style','pleat','belt','waist','hem','backpocket','cuff','liner','thread','button','fabric'], 'tp-');
   const vestNav = document.getElementById('vest-nav');
   if(vestNav) refreshNavDone(vestNav,
-    ['collar','pocket','back','fabric'], 'vp-');
+    ['collar','pocket','back','button','fabric'], 'vp-');
   const shNav = document.getElementById('sh-nav');
   if(shNav) refreshNavDone(shNav,
-    ['type','fit','collar','pocket','cuff','band','emb','fabric'], 'shp-');
+    ['type','fit','collar','pocket','cuff','band','emb','button','fabric'], 'shp-');
 }
 
 // ── PICKUP DATE ──
@@ -3800,6 +3825,8 @@ const SUIT_PRESETS = {
     chestPocket: 'ตรง',
     sidePocket:  'ปก',
     backVent:    'ไม่มีผ่า',
+    btnCode:     'BP22',
+    img:         'presets/db_suit.jpg',
   },
   sb_suit: {
     collar:      'ปกแหลม',
@@ -3811,6 +3838,8 @@ const SUIT_PRESETS = {
     chestPocket: 'ตรง',
     sidePocket:  'ปก',
     backVent:    'ไม่มีผ่า',
+    btnCode:     'BP22',
+    img:         'presets/sb_suit.jpg',
   },
   pink_db_women: {
     collar:      'ปกธรรมดา',
@@ -3824,6 +3853,8 @@ const SUIT_PRESETS = {
     sidePocket:  'ปก',
     backVent:    'ผ่ากลาง',
     emb:         'ไม่ปัก',
+    btnCode:     'BP07',
+    img:         'presets/Pinkpink_db_women.jpg',
   },
   grey_sb_women: {
     collar:      'ปกธรรมดา',
@@ -3837,6 +3868,8 @@ const SUIT_PRESETS = {
     sidePocket:  'ปก',
     backVent:    'ผ่ากลาง',
     emb:         'ไม่ปัก',
+    btnCode:     'BP28',
+    img:         'presets/grey_sb_women.jpg',
   },
   beige_db_women: {
     collar:      'ปกแหลม',
@@ -3846,6 +3879,8 @@ const SUIT_PRESETS = {
     sidePocket:  'เฉียง',
     backVent:    'ผ่ากลาง',
     emb:         'ไม่ปัก',
+    btnCode:     'BP28',
+    img:         'presets/beige_db_women.jpg',
   },
 };
 
@@ -3899,6 +3934,13 @@ function applySuitPreset(pid, cardEl){
     const embEl = document.querySelector(`#d_embToggle .pill[data-v="${p.emb}"]`);
     if(embEl){ togglePill(embEl,'d_embToggle'); toggleEmbDetail(p.emb==='ปัก'); }
   }
+  // รหัสกระดุม auto-fill
+  const suitBtnEl = document.getElementById('d_suitBtnCode');
+  if(suitBtnEl && p.btnCode !== undefined){ suitBtnEl.value = p.btnCode; refreshAllNavDone(); }
+  // Preset preview image
+  const sPrvDiv = document.getElementById('presetPreviewSuit');
+  const sPrvImg = document.getElementById('presetPreviewSuitImg');
+  if(sPrvDiv && sPrvImg){ sPrvImg.src = p.img||''; sPrvDiv.style.display = p.img ? 'block' : 'none'; }
 }
 
 function pickBody(el){
@@ -3914,12 +3956,16 @@ const VEST_PRESETS = {
     vPocket:     'มีกระเป๋า',
     vPocketTop:  0,
     vPocketBot:  2,
+    btnCode:     'BP22',
+    img:         'presets/sb_vest_notch.jpg',
   },
   db_vest_peak: {
     vCollar:     'ปกแหลม',
     vPocket:     'มีกระเป๋า',
     vPocketTop:  1,
     vPocketBot:  2,
+    btnCode:     'BP22',
+    img:         'presets/db_vest_peak.jpg',
   },
 };
 
@@ -3947,6 +3993,13 @@ function applyVestPreset(pid, cardEl){
       if(botEl && p.vPocketBot !== undefined) botEl.value = p.vPocketBot;
     }
   }
+  // รหัสกระดุม auto-fill
+  const vestBtnEl = document.getElementById('d_vestBtnCode');
+  if(vestBtnEl && p.btnCode !== undefined){ vestBtnEl.value = p.btnCode; refreshAllNavDone(); }
+  // Preset preview image
+  const vPrvDiv = document.getElementById('presetPreviewVest');
+  const vPrvImg = document.getElementById('presetPreviewVestImg');
+  if(vPrvDiv && vPrvImg){ vPrvImg.src = p.img||''; vPrvDiv.style.display = p.img ? 'block' : 'none'; }
 }
 
 function switchVestPanel(id){
@@ -4039,6 +4092,7 @@ function pickEmbStyle(el){
   document.querySelectorAll('#d_embStyle .emb-style-item').forEach(i=>i.classList.remove('sel'));
   el.classList.add('sel');
   S.pills['d_embStyle'] = el.dataset.v;
+  refreshAllNavDone();
 }
 
 function pickEmbPos(el){
@@ -4047,7 +4101,68 @@ function pickEmbPos(el){
   S.pills['d_embPos'] = el.dataset.v;
 }
 // ── INIT ──
-document.addEventListener('DOMContentLoaded', buildGrids);
+
+// ── DRAFT ──
+function saveDraft(){
+  const snap={ts:Date.now(),gtype:S.gtype,data:{}};
+  document.querySelectorAll('input[id],select[id],textarea[id]').forEach(el=>{
+    if(el.type!=='hidden') snap.data[el.id]=el.value;
+  });
+  const drafts=JSON.parse(localStorage.getItem('sc_drafts')||'[]');
+  drafts.unshift(snap); drafts.splice(20);
+  localStorage.setItem('sc_drafts',JSON.stringify(drafts));
+  updateDraftCount(); showDraftToast('บันทึกฉบับร่างแล้ว ✓');
+}
+function updateDraftCount(){
+  const el=document.getElementById('draftCount');
+  if(el) el.textContent=JSON.parse(localStorage.getItem('sc_drafts')||'[]').length;
+}
+function toggleDraftPanel(){
+  const p=document.getElementById('draftPanel');
+  if(!p) return;
+  if(p.style.display==='none'||!p.style.display){renderDraftPanel();p.style.display='block';}
+  else p.style.display='none';
+}
+function renderDraftPanel(){
+  const p=document.getElementById('draftPanel');
+  const drafts=JSON.parse(localStorage.getItem('sc_drafts')||'[]');
+  if(!drafts.length){p.innerHTML='<div style="color:#aaa;font-size:12px;padding:8px 0;font-family:Prompt">ยังไม่มีฉบับร่าง</div>';return;}
+  p.innerHTML=drafts.map((d,i)=>{
+    const dt=new Date(d.ts);
+    const ts=dt.toLocaleDateString('th-TH')+' '+dt.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+    const nm=(d.data.f_name||'ไม่ระบุชื่อ').trim();
+    return `<div class="draft-item" onclick="loadDraft(${i})">`
+      +`<div class="draft-item-name">${nm} <span style="color:#bbb;font-size:11px">${d.gtype||'-'}</span></div>`
+      +`<div class="draft-item-ts">${ts}</div>`
+      +`<button class="draft-del-btn" onclick="deleteDraft(${i});event.stopPropagation()">×</button>`
+      +'</div>';
+  }).join('');
+}
+function loadDraft(idx){
+  const drafts=JSON.parse(localStorage.getItem('sc_drafts')||'[]');
+  const d=drafts[idx]; if(!d) return;
+  Object.entries(d.data).forEach(([id,val])=>{
+    const el=document.getElementById(id); if(el) el.value=val;
+  });
+  if(d.gtype){ const gEl=document.querySelector(`[data-type="${d.gtype}"]`); selG(d.gtype,gEl); }
+  document.getElementById('draftPanel').style.display='none';
+  showDraftToast('โหลดฉบับร่างแล้ว');
+}
+function deleteDraft(idx){
+  const drafts=JSON.parse(localStorage.getItem('sc_drafts')||'[]');
+  drafts.splice(idx,1);
+  localStorage.setItem('sc_drafts',JSON.stringify(drafts));
+  updateDraftCount(); renderDraftPanel();
+}
+function showDraftToast(msg){
+  let t=document.getElementById('draftToast');
+  if(!t){ t=document.createElement('div'); t.id='draftToast';
+    t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#d9ae5d;padding:10px 20px;border-radius:20px;font-size:13px;font-family:Prompt,sans-serif;z-index:9999;opacity:0;transition:opacity .3s;white-space:nowrap';
+    document.body.appendChild(t); }
+  t.textContent=msg; t.style.opacity='1';
+  clearTimeout(t._tmr); t._tmr=setTimeout(()=>t.style.opacity='0',2000);
+}
+document.addEventListener('DOMContentLoaded',()=>{buildGrids();updateDraftCount();});
 // tape canvas removed
 
 // ── COLOR PICKER ──
